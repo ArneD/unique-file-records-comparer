@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using FluentAssertions;
 using Xunit;
 
@@ -16,7 +15,7 @@ namespace UniqueFileRecordsComparer.Core.IntegrationTests
         {
             CheckFilesExist();
 
-            var twoFieldFileFields = new CsvReader(twoFieldFilePath).Read();
+            var twoFieldFileFields = new CsvReader(twoFieldFilePath, ";").Read(true);
 
             twoFieldFileFields.Should().NotBeNull();
             twoFieldFileFields.Count.Should().BeGreaterThan(0);

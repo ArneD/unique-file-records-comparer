@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="CompareTwoFieldWithOneFieldTests.cs" />
     <Compile Include="CsvReaderTests\When_reading_csv_file.cs" />
+    <Compile Include="CsvReaderTests\When_reading_excel_file.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
