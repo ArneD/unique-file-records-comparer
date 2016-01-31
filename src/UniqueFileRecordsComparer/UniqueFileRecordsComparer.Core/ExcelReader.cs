@@ -14,7 +14,7 @@ namespace UniqueFileRecordsComparer.Core
             _path = path;
         }
 
-        public IDictionary<string, IList<string>> Read(bool hasHeaders)
+        public IEnumerable<Row> Read(bool hasHeaders)
         {
             using (var stream = File.Open(_path, FileMode.Open, FileAccess.Read))
             {
@@ -26,36 +26,32 @@ namespace UniqueFileRecordsComparer.Core
             }
         }
 
-        private static IDictionary<string, IList<string>> ExtractDataSet(IExcelDataReader excelReader)
+        private static IEnumerable<Row> ExtractDataSet(IExcelDataReader excelReader)
         {
-            var rows = new Dictionary<string, IList<string>>();
             using (var result = excelReader.AsDataSet())
             {
-                GetHeaders(result, rows);
-                GetValues(result, rows);
+                return GetRows(result);
             }
-            return rows;
         }
 
-        private static void GetValues(DataSet result, Dictionary<string, IList<string>> rows)
+        private static IEnumerable<Row> GetRows(DataSet result)
         {
-            foreach (DataRow row in result.Tables[0].Rows)
+            var rows = new List<Row>();
+            var dataTable = result.Tables[0];
+
+            foreach (DataRow dataRow in dataTable.Rows)
             {
-                int i = 0;
-                foreach (var key in rows.Keys)
+                var row = new Row();
+                var i = 0;
+                foreach (var item in dataRow.ItemArray)
                 {
-                    rows[key].Add(row[i].ToString());
+                    row.Add(new Column(dataTable.Columns[i].ColumnName, item.ToString()));
                     i++;
                 }
+                rows.Add(row);
             }
-        }
 
-        private static void GetHeaders(DataSet result, Dictionary<string, IList<string>> rows)
-        {
-            foreach (var column in result.Tables[0].Columns)
-            {
-                rows.Add(column.ToString(), new List<string>());
-            }
+            return rows;
         }
     }
 }

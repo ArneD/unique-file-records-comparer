@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using CsvHelper;
 using CsvHelper.Configuration;
 
@@ -21,34 +20,33 @@ namespace UniqueFileRecordsComparer.Core
             };
         }
 
-        public IDictionary<string, IList<string>> Read(bool hasHeaders)
+        public IEnumerable<Row> Read(bool hasHeaders)
         {
             _csvConfiguration.HasHeaderRecord = hasHeaders;
 
-            Dictionary<string, IList<string>> dictionary;
+            IEnumerable<Row> rows;
             using (var csv = new CsvHelper.CsvReader(new StreamReader(_path), _csvConfiguration))
             {
-                dictionary = ReadCsv(csv);
+                rows = ReadCsv(csv);
             }
 
-            return dictionary;
+            return rows;
         }
 
-        private static Dictionary<string, IList<string>> ReadCsv(ICsvReader csv)
+        private static IEnumerable<Row> ReadCsv(ICsvReader csv)
         {
-            csv.Read();
-            var dictionary = csv.FieldHeaders.ToDictionary<string, string, IList<string>>(fieldHeader => fieldHeader,
-                fieldHeader => new List<string>());
-
-            do
+            var rows = new List<Row>();
+            while (csv.Read())
             {
-                for (var i = 0; i < dictionary.Count; i++)
+                var row = new Row();
+                for (var i = 0; i < csv.CurrentRecord.Length; i++)
                 {
-                    dictionary.ElementAt(i).Value.Add(csv.GetField(i));
+                    row.Add(new Column(csv.FieldHeaders[i], csv.CurrentRecord[i]));
                 }
-            } while (csv.Read());
+                rows.Add(row);
+            }
 
-            return dictionary;
+            return rows;
         }
     }
 }
