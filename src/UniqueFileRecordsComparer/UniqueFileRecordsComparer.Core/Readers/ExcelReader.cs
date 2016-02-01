@@ -3,9 +3,9 @@ using System.Data;
 using System.IO;
 using Excel;
 
-namespace UniqueFileRecordsComparer.Core
+namespace UniqueFileRecordsComparer.Core.Readers
 {
-    public class ExcelReader
+    public class ExcelReader : IFileReader
     {
         private readonly string _path;
 

@@ -3,9 +3,9 @@ using System.IO;
 using CsvHelper;
 using CsvHelper.Configuration;
 
-namespace UniqueFileRecordsComparer.Core
+namespace UniqueFileRecordsComparer.Core.Readers
 {
-    public class CsvReader
+    public class CsvReader : IFileReader
     {
         private readonly string _path;
         private readonly CsvConfiguration _csvConfiguration;

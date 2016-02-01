@@ -12,6 +12,11 @@ namespace UniqueFileRecordsComparer.Core
             return Items.FirstOrDefault(column => string.Equals(column.Header, header, StringComparison.OrdinalIgnoreCase))?.Value;
         }
 
+        public IEnumerable<string> GetColumnHeaders()
+        {
+            return Items.Select(column => column.Header);
+        }
+
         public IEnumerable<string> GetValueCombinations(IEnumerable<string> headers)
         {
             var combinations = new List<string>();
