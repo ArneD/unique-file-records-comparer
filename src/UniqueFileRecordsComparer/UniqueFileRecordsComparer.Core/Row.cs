@@ -41,5 +41,20 @@ namespace UniqueFileRecordsComparer.Core
 
             return combinations;
         }
+
+        public bool IsEqualTo(IList<string> rowColumnHeadersToCompare, Row targetRow, IList<string> targetColumnHeadersToCompare)
+        {
+            var targetCombinations = targetRow.GetValueCombinations(targetColumnHeadersToCompare);
+            return (GetValueCombinations(rowColumnHeadersToCompare)
+                .Any(x => targetCombinations.Any(y => x.ToUpperInvariant().Contains(y.ToUpperInvariant())))
+                    || targetCombinations.Any(target => HasTargetStringAllHeaders(target, rowColumnHeadersToCompare)));
+        }
+
+        private bool HasTargetStringAllHeaders(string target, IEnumerable<string> rowColumnHeadersToCompare)
+        {
+            var allValues = rowColumnHeadersToCompare.Select(GetColumnValueByHeader).ToList();
+
+            return allValues.All(value => target.ToUpperInvariant().Contains(value.ToUpperInvariant()));
+        }
     }
 }

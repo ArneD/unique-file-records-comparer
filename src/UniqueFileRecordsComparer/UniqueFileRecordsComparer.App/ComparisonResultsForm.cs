@@ -14,7 +14,6 @@ namespace UniqueFileRecordsComparer.App
         {
             _comparisonResult = comparisonResult;
             InitializeComponent();
-
             
             FillGrid(_comparisonResult.NewRows.ToList(), NewRowsGrid);
             FillGrid(_comparisonResult.DeletedRows.ToList(), DeletedRowsGrid);

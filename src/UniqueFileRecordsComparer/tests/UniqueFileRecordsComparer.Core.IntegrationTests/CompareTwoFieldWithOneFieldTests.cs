@@ -29,7 +29,7 @@ namespace UniqueFileRecordsComparer.Core.IntegrationTests
             var csvRowCollection = new RowCollection(csvRows, compareTwoFields);
             var excelRowCollection = new RowCollection(excelRows, compareOneField);
 
-            var rowComparer = new RowComparer(csvRowCollection, excelRowCollection);
+            var rowComparer = new RowCollectionComparer(csvRowCollection, excelRowCollection);
             var result = rowComparer.GetCollectionComparisonResult();
 
             result.NewRows.ShouldAllBeEquivalentTo(new List<Row>

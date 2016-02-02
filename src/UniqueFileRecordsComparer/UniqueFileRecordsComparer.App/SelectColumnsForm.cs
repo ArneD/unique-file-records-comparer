@@ -59,7 +59,7 @@ namespace UniqueFileRecordsComparer.App
             var sourceRowCollection = new RowCollection(_sourceRows, SourceColumnsCheckList.CheckedItems.Cast<string>().ToList());
             var targetRowCollection = new RowCollection(_targetRows, TargetColumnsCheckList.CheckedItems.Cast<string>().ToList());
 
-            var comparer = new RowComparer(sourceRowCollection, targetRowCollection);
+            var comparer = new RowCollectionComparer(sourceRowCollection, targetRowCollection);
             return comparer.GetCollectionComparisonResult();
         }
     }

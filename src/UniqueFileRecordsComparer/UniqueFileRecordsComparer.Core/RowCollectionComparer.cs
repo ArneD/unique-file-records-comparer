@@ -3,12 +3,12 @@ using System.Linq;
 
 namespace UniqueFileRecordsComparer.Core
 {
-    public class RowComparer
+    public class RowCollectionComparer
     {
         private readonly RowCollection _sourceRowCollection;
         private readonly RowCollection _targetRowCollection;
 
-        public RowComparer(RowCollection sourceRowCollection, RowCollection targetRowCollection)
+        public RowCollectionComparer(RowCollection sourceRowCollection, RowCollection targetRowCollection)
         {
             _sourceRowCollection = sourceRowCollection;
             _targetRowCollection = targetRowCollection;
@@ -39,18 +39,14 @@ namespace UniqueFileRecordsComparer.Core
         {
             foreach (var sourceRow in _sourceRowCollection)
             {
-                bool targetFound = false;
-                foreach (var targetRow in _targetRowCollection)
+                var targetFound = false;
+                foreach (var targetRow in _targetRowCollection
+                                .Where(targetRow => sourceRow
+                                    .IsEqualTo(_sourceRowCollection.ColumnHeadersToCompare, targetRow, _targetRowCollection.ColumnHeadersToCompare)))
                 {
-                    var targetCombinations = targetRow.GetValueCombinations(_targetRowCollection.ColumnHeadersToCompare);
-                    if (sourceRow.GetValueCombinations(_sourceRowCollection.ColumnHeadersToCompare)
-                        .Any(x => targetCombinations.Any(y => x.ToUpperInvariant().Contains(y.ToUpperInvariant())))
-                        || targetCombinations.Any(target => HasTargetStringAllSourceValues(target, sourceRow)))
-                    {
-                        equalRows.Add(targetRow);
-                        targetFound = true;
-                        break;
-                    }
+                    equalRows.Add(targetRow);
+                    targetFound = true;
+                    break;
                 }
 
                 if (!targetFound)
@@ -58,13 +54,6 @@ namespace UniqueFileRecordsComparer.Core
                     deletedRows.Add(sourceRow);
                 }
             }
-        }
-
-        private bool HasTargetStringAllSourceValues(string target, Row sourceRow)
-        {
-            var allValues = _sourceRowCollection.ColumnHeadersToCompare.Select(sourceRow.GetColumnValueByHeader).ToList();
-
-            return allValues.All(value => target.ToUpperInvariant().Contains(value.ToUpperInvariant()));
         }
     }
 }

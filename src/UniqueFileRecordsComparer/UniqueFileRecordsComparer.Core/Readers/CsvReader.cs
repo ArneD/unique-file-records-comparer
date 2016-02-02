@@ -41,7 +41,7 @@ namespace UniqueFileRecordsComparer.Core.Readers
                 var row = new Row();
                 for (var i = 0; i < csv.CurrentRecord.Length; i++)
                 {
-                    row.Add(new Column(csv.FieldHeaders[i], csv.CurrentRecord[i]));
+                    row.Add(new Column(csv.FieldHeaders[i], csv.CurrentRecord[i].Trim()));
                 }
                 rows.Add(row);
             }

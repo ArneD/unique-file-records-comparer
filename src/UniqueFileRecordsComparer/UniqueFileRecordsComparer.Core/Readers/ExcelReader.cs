@@ -45,7 +45,7 @@ namespace UniqueFileRecordsComparer.Core.Readers
                 var i = 0;
                 foreach (var item in dataRow.ItemArray)
                 {
-                    row.Add(new Column(dataTable.Columns[i].ColumnName, item.ToString()));
+                    row.Add(new Column(dataTable.Columns[i].ColumnName, item.ToString().Trim()));
                     i++;
                 }
                 rows.Add(row);
