@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using FluentAssertions;
 using UniqueFileRecordsComparer.Core.Readers;
 using Xunit;
@@ -17,17 +16,17 @@ namespace UniqueFileRecordsComparer.Core.IntegrationTests
         {
             CheckFilesExist();
 
-            var csvRows = new CsvReader(CsvFileWithHeadersPath, ";").Read(true).ToList();
-            csvRows.Should().NotBeEmpty();
+            var csvRowCollection = new CsvReader(CsvFileWithHeadersPath, ";").Read(true);
+            csvRowCollection.Should().NotBeEmpty();
 
-            var excelRows = new ExcelReader(ExcelFileWithHeadersPath).Read(true).ToList();
-            excelRows.Should().NotBeEmpty();
+            var excelRowCollection = new ExcelReader(ExcelFileWithHeadersPath).Read(true);
+            excelRowCollection.Should().NotBeEmpty();
 
             var compareTwoFields = new List<string> { "First name", "Last name" };
             var compareOneField = new List<string> { "Name" };
 
-            var csvRowCollection = new RowCollection(csvRows, compareTwoFields);
-            var excelRowCollection = new RowCollection(excelRows, compareOneField);
+            csvRowCollection.ColumnHeadersToCompare = compareTwoFields;
+            excelRowCollection.ColumnHeadersToCompare = compareOneField;
 
             var rowComparer = new RowCollectionComparer(csvRowCollection, excelRowCollection);
             var result = rowComparer.GetCollectionComparisonResult();

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using CsvHelper;
 using CsvHelper.Configuration;
 
@@ -20,17 +21,17 @@ namespace UniqueFileRecordsComparer.Core.Readers
             };
         }
 
-        public IEnumerable<Row> Read(bool hasHeaders)
+        public RowCollection Read(bool hasHeaders)
         {
             _csvConfiguration.HasHeaderRecord = hasHeaders;
 
-            IEnumerable<Row> rows;
+            IList<Row> rows;
             using (var csv = new CsvHelper.CsvReader(new StreamReader(_path), _csvConfiguration))
             {
-                rows = ReadCsv(csv);
+                rows = ReadCsv(csv).ToList();
             }
 
-            return rows;
+            return new RowCollection(rows);
         }
 
         private static IEnumerable<Row> ReadCsv(ICsvReader csv)

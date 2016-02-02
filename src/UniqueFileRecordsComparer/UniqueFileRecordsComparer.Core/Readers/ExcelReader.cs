@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using Excel;
 
 namespace UniqueFileRecordsComparer.Core.Readers
@@ -14,14 +15,14 @@ namespace UniqueFileRecordsComparer.Core.Readers
             _path = path;
         }
 
-        public IEnumerable<Row> Read(bool hasHeaders)
+        public RowCollection Read(bool hasHeaders)
         {
             using (var stream = File.Open(_path, FileMode.Open, FileAccess.Read))
             {
                 using (var excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream))
                 {
                     excelReader.IsFirstRowAsColumnNames = hasHeaders;
-                    return ExtractDataSet(excelReader);
+                    return new RowCollection(ExtractDataSet(excelReader).ToList());
                 }
             }
         }

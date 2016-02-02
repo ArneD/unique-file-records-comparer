@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows.Forms;
 using UniqueFileRecordsComparer.Core;
 using UniqueFileRecordsComparer.Core.Readers;
@@ -8,8 +7,8 @@ namespace UniqueFileRecordsComparer.App
 {
     public partial class SelectColumnsForm : Form
     {
-        private readonly IList<Row> _sourceRows;
-        private readonly IList<Row> _targetRows;
+        private readonly RowCollection _sourceRowCollection;
+        private readonly RowCollection _targetRowCollection;
 
         public SelectColumnsForm(ComparerArguments comparerArguments)
         {
@@ -18,16 +17,16 @@ namespace UniqueFileRecordsComparer.App
             var sourceReader = FileReaderFactory.CreateFromFileName(comparerArguments.SourceFilePath);
             var targetReader = FileReaderFactory.CreateFromFileName(comparerArguments.TargetFilePath);
 
-            _sourceRows = sourceReader.Read(true).ToList();
-            _targetRows = targetReader.Read(true).ToList();
+            _sourceRowCollection = sourceReader.Read(true);
+            _targetRowCollection = targetReader.Read(true);
 
-            AddColumnsToCheckList(SourceColumnsCheckList, _sourceRows.First());
-            AddColumnsToCheckList(TargetColumnsCheckList, _targetRows.First());
+            AddColumnsToCheckList(SourceColumnsCheckList, _sourceRowCollection);
+            AddColumnsToCheckList(TargetColumnsCheckList, _targetRowCollection);
         }
 
-        private static void AddColumnsToCheckList(CheckedListBox checkList, Row row)
+        private static void AddColumnsToCheckList(CheckedListBox checkList, RowCollection rowCollection)
         {
-            foreach (var columnHeader in row.GetColumnHeaders())
+            foreach (var columnHeader in rowCollection.GetColumnHeaders())
             {
                 checkList.Items.Add(columnHeader);
             }
@@ -56,10 +55,10 @@ namespace UniqueFileRecordsComparer.App
 
         private RowCollectionComparisonResult CompareFiles()
         {
-            var sourceRowCollection = new RowCollection(_sourceRows, SourceColumnsCheckList.CheckedItems.Cast<string>().ToList());
-            var targetRowCollection = new RowCollection(_targetRows, TargetColumnsCheckList.CheckedItems.Cast<string>().ToList());
+            _sourceRowCollection.ColumnHeadersToCompare = SourceColumnsCheckList.CheckedItems.Cast<string>().ToList();
+            _targetRowCollection.ColumnHeadersToCompare = TargetColumnsCheckList.CheckedItems.Cast<string>().ToList();
 
-            var comparer = new RowCollectionComparer(sourceRowCollection, targetRowCollection);
+            var comparer = new RowCollectionComparer(_sourceRowCollection, _targetRowCollection);
             return comparer.GetCollectionComparisonResult();
         }
     }

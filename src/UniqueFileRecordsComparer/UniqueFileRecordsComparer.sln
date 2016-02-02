@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniqueFileRecordsComparer.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniqueFileRecordsComparer.App", "UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj", "{FC8EF3D2-0FB5-4663-AEF6-95807C99C474}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniqueFileRecordsComparer.Core.Tests", "UniqueFileRecordsComparer.Core.Tests\UniqueFileRecordsComparer.Core.Tests.csproj", "{AB5DD7DF-2A4C-4433-85C1-E33A6A89D98E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,11 +31,16 @@ Global
 		{FC8EF3D2-0FB5-4663-AEF6-95807C99C474}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC8EF3D2-0FB5-4663-AEF6-95807C99C474}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC8EF3D2-0FB5-4663-AEF6-95807C99C474}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB5DD7DF-2A4C-4433-85C1-E33A6A89D98E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB5DD7DF-2A4C-4433-85C1-E33A6A89D98E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB5DD7DF-2A4C-4433-85C1-E33A6A89D98E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB5DD7DF-2A4C-4433-85C1-E33A6A89D98E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5482EA15-9C03-4F5E-9316-C78D91253AAD} = {5D0DC7F4-4BCC-4C47-8430-65BB49E240C5}
+		{AB5DD7DF-2A4C-4433-85C1-E33A6A89D98E} = {5D0DC7F4-4BCC-4C47-8430-65BB49E240C5}
 	EndGlobalSection
 EndGlobal
