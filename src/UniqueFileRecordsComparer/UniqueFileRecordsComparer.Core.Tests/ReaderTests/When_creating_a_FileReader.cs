@@ -3,7 +3,7 @@ using FluentAssertions;
 using UniqueFileRecordsComparer.Core.Readers;
 using Xunit;
 
-namespace UniqueFileRecordsComparer.Core.IntegrationTests.ReaderTests
+namespace UniqueFileRecordsComparer.Core.Tests.ReaderTests
 {
     public class When_creating_a_FileReader
     {

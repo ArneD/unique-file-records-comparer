@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ReaderTests\When_creating_a_FileReader.cs" />
     <Compile Include="RowTests\When_getting_ColumnHeaders.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
