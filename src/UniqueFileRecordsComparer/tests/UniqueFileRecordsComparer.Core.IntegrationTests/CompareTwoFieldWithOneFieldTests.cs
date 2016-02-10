@@ -17,10 +17,10 @@ namespace UniqueFileRecordsComparer.Core.IntegrationTests
         {
             CheckFilesExist();
 
-            var csvRowCollection = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(CsvFileWithHeadersPath))).Read();
-            csvRowCollection.Should().NotBeEmpty();
+            var csvRowCollection = ReadRowCollection(CsvFileWithHeadersPath);
+            var excelRowCollection = ReadRowCollection(ExcelFileWithHeadersPath);
 
-            var excelRowCollection = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(ExcelFileWithHeadersPath))).Read();
+            csvRowCollection.Should().NotBeEmpty();
             excelRowCollection.Should().NotBeEmpty();
 
             var compareTwoFields = new List<string> { "First name", "Last name" };
@@ -31,7 +31,7 @@ namespace UniqueFileRecordsComparer.Core.IntegrationTests
 
             var rowComparer = new RowCollectionComparer(csvRowCollection, excelRowCollection);
             var result = rowComparer.GetCollectionComparisonResult();
-            
+
             result.NewRows.ShouldAllBeEquivalentTo(new List<Row>
             {
                 new Row
@@ -59,6 +59,16 @@ namespace UniqueFileRecordsComparer.Core.IntegrationTests
                     new Column("Address", "Not happy road 32")
                 },
             });
+        }
+
+        private static RowCollection ReadRowCollection(string path)
+        {
+            RowCollection csvRowCollection;
+            using (var reader = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(path))))
+            {
+                csvRowCollection = reader.Read();
+            }
+            return csvRowCollection;
         }
 
         private static void CheckFilesExist()

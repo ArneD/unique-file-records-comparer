@@ -6,7 +6,7 @@ using Excel;
 
 namespace UniqueFileRecordsComparer.Core.Readers
 {
-    public class ExcelReader : IFileReader, IDisposable
+    public class ExcelReader : IFileReader
     {
         private readonly IExcelDataReader _excelDataReader;
 

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using UniqueFileRecordsComparer.Core;
 using UniqueFileRecordsComparer.Core.Writers;
@@ -72,7 +72,7 @@ namespace UniqueFileRecordsComparer.App
 
                 if (dialogResult == DialogResult.OK)
                 {
-                    using (var writer = CsvWriter.Create(saveDialog.FileName))
+                    using (var writer = CsvWriter.Create(new FileInfoWrapper(new FileInfo(saveDialog.FileName))))
                     {
                         CsvWriter.WriteToCsv(writer, rows);
                     }

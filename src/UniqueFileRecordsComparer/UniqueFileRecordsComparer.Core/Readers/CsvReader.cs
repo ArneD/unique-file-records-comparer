@@ -5,7 +5,7 @@ using CsvHelper;
 
 namespace UniqueFileRecordsComparer.Core.Readers
 {
-    public class CsvReader : IFileReader, IDisposable
+    public class CsvReader : IFileReader
     {
         private readonly ICsvReader _reader;
 

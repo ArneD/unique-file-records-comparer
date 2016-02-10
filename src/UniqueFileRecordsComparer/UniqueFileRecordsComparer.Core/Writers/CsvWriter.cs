@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Text;
 using CsvHelper;
@@ -10,7 +11,7 @@ namespace UniqueFileRecordsComparer.Core.Writers
 {
     public static class CsvWriter
     {
-        public static ICsvWriter Create(string fileName)
+        public static ICsvWriter Create(FileInfoBase fileInfo)
         {
             var csvConfiguration = new CsvConfiguration
             {
@@ -18,7 +19,7 @@ namespace UniqueFileRecordsComparer.Core.Writers
                 HasHeaderRecord = true
             };
 
-            var streamWriter = new StreamWriter(new FileStream(fileName, FileMode.Create), Encoding.UTF8);
+            var streamWriter = new StreamWriter(fileInfo.OpenWrite(), Encoding.UTF8);
             return new CsvHelper.CsvWriter(streamWriter, csvConfiguration);
         }
 
