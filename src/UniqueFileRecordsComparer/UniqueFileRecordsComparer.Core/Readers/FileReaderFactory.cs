@@ -1,20 +1,31 @@
 ﻿using System;
+using System.IO;
+using System.IO.Abstractions;
+using CsvHelper.Configuration;
+using Excel;
 
 namespace UniqueFileRecordsComparer.Core.Readers
 {
     public static class FileReaderFactory
     {
-        public static IFileReader CreateFromFileName(string fileName)
+        public static IFileReader CreateFromFileName(FileInfoBase fileInfoBase)
         {
-            //TODO: ask delimiter
-            if (IsCsvFile(fileName))
+            if (IsCsvFile(fileInfoBase.FullName))
             {
-                return new CsvReader(fileName, ";");
+                var reader = new CsvHelper.CsvReader(new StreamReader(fileInfoBase.OpenRead()), new CsvConfiguration
+                {
+                    HasHeaderRecord = true,
+                    Delimiter = ";"
+                });
+
+                return new CsvReader(reader);
             }
 
-            if (IsExcelFile(fileName))
+            if (IsExcelFile(fileInfoBase.FullName))
             {
-                return new ExcelReader(fileName);
+                var excelReader = ExcelReaderFactory.CreateOpenXmlReader(fileInfoBase.Open(FileMode.Open, FileAccess.Read));
+                excelReader.IsFirstRowAsColumnNames = true;
+                return new ExcelReader(excelReader);
             }
 
             throw new InvalidOperationException();

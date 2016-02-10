@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.IO.Abstractions;
+using System.Linq;
 using System.Windows.Forms;
 using UniqueFileRecordsComparer.Core;
 using UniqueFileRecordsComparer.Core.Readers;
@@ -14,11 +16,11 @@ namespace UniqueFileRecordsComparer.App
         {
             InitializeComponent();
 
-            var sourceReader = FileReaderFactory.CreateFromFileName(comparerArguments.SourceFilePath);
-            var targetReader = FileReaderFactory.CreateFromFileName(comparerArguments.TargetFilePath);
+            var sourceReader = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(comparerArguments.SourceFilePath)));
+            var targetReader = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(comparerArguments.TargetFilePath)));
 
-            _sourceRowCollection = sourceReader.Read(true);
-            _targetRowCollection = targetReader.Read(true);
+            _sourceRowCollection = sourceReader.Read();
+            _targetRowCollection = targetReader.Read();
 
             AddColumnsToCheckList(SourceColumnsCheckList, _sourceRowCollection);
             AddColumnsToCheckList(TargetColumnsCheckList, _targetRowCollection);

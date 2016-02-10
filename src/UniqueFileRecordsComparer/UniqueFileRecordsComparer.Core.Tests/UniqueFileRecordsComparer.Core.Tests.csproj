@@ -40,6 +40,14 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Abstractions, Version=2.0.0.124, Culture=neutral, PublicKeyToken=d480b5b72fb413da, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Abstractions.2.0.0.124\lib\net40\System.IO.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Abstractions.TestingHelpers, Version=2.0.0.124, Culture=neutral, PublicKeyToken=d480b5b72fb413da, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Abstractions.TestingHelpers.2.0.0.124\lib\net40\System.IO.Abstractions.TestingHelpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -65,6 +73,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ReaderTests\When_creating_a_FileReader.cs" />
+    <Compile Include="RowCollectionComparerTests\When_comparing_collections.cs" />
+    <Compile Include="RowTests\When_comparing_Rows.cs" />
     <Compile Include="RowTests\When_getting_ColumnHeaders.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

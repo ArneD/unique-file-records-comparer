@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
+using System.Text;
 
 namespace UniqueFileRecordsComparer.Core
 {
@@ -41,7 +43,7 @@ namespace UniqueFileRecordsComparer.Core
         {
             var targetCombinations = targetRow.GetValueCombinations(targetColumnHeadersToCompare);
             return (GetValueCombinations(rowColumnHeadersToCompare)
-                .Any(x => targetCombinations.Any(y => x.ToUpperInvariant().Contains(y.ToUpperInvariant())))
+                .Any(x => targetCombinations.Any(y => RemoveDiacritics(x).IndexOf(RemoveDiacritics(y), StringComparison.OrdinalIgnoreCase) >= 0))
                     || targetCombinations.Any(target => HasTargetStringAllHeaders(target, rowColumnHeadersToCompare)));
         }
 
@@ -49,7 +51,16 @@ namespace UniqueFileRecordsComparer.Core
         {
             var allValues = rowColumnHeadersToCompare.Select(GetColumnValueByHeader).ToList();
 
-            return allValues.All(value => target.ToUpperInvariant().Contains(value.ToUpperInvariant()));
+            return allValues.All(value => RemoveDiacritics(target).IndexOf(RemoveDiacritics(value), StringComparison.OrdinalIgnoreCase) >= 0);
+        }
+
+        static string RemoveDiacritics(string text)
+        {
+            return string.Concat(
+                text.Normalize(NormalizationForm.FormD)
+                .Where(ch => CharUnicodeInfo.GetUnicodeCategory(ch) !=
+                                              UnicodeCategory.NonSpacingMark)
+              ).Normalize(NormalizationForm.FormC).Replace('\'', ' ');
         }
     }
 }

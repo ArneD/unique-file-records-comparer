@@ -1,53 +1,53 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CsvHelper;
-using CsvHelper.Configuration;
 
 namespace UniqueFileRecordsComparer.Core.Readers
 {
-    public class CsvReader : IFileReader
+    public class CsvReader : IFileReader, IDisposable
     {
-        private readonly string _path;
-        private readonly CsvConfiguration _csvConfiguration;
+        private readonly ICsvReader _reader;
 
-        public CsvReader(string path, string delimiter)
+        public CsvReader(ICsvReader reader)
         {
-            _path = path;
-
-            _csvConfiguration = new CsvConfiguration
-            {
-                Delimiter = delimiter
-            };
+            _reader = reader;
         }
 
-        public RowCollection Read(bool hasHeaders)
+        public RowCollection Read()
         {
-            _csvConfiguration.HasHeaderRecord = hasHeaders;
-
-            IList<Row> rows;
-            using (var csv = new CsvHelper.CsvReader(new StreamReader(_path), _csvConfiguration))
-            {
-                rows = ReadCsv(csv).ToList();
-            }
-
+            IList<Row> rows = ReadCsv().ToList();
             return new RowCollection(rows);
         }
 
-        private static IEnumerable<Row> ReadCsv(ICsvReader csv)
+        private IEnumerable<Row> ReadCsv()
         {
             var rows = new List<Row>();
-            while (csv.Read())
+            while (_reader.Read())
             {
                 var row = new Row();
-                for (var i = 0; i < csv.CurrentRecord.Length; i++)
+                for (var i = 0; i < _reader.CurrentRecord.Length; i++)
                 {
-                    row.Add(new Column(csv.FieldHeaders[i], csv.CurrentRecord[i].Trim()));
+                    row.Add(new Column(_reader.FieldHeaders[i], _reader.CurrentRecord[i].Trim()));
                 }
                 rows.Add(row);
             }
 
             return rows;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _reader?.Dispose();
+            }
         }
     }
 }

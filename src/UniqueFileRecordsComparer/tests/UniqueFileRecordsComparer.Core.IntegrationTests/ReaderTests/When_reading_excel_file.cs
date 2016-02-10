@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.IO.Abstractions;
 using FluentAssertions;
 using UniqueFileRecordsComparer.Core.Readers;
 using Xunit;
@@ -43,10 +45,16 @@ namespace UniqueFileRecordsComparer.Core.IntegrationTests.ReaderTests
                     new Column("Nr", "7"),
                     new Column("Name", "Doe John Jr."),
                     new Column("Address", "Happy road 32")
+                },
+                new Row
+                {
+                    new Column("Nr", "8"),
+                    new Column("Name", "D'Family Name"),
+                    new Column("Address", "ABC Road 1")
                 }
             };
 
-            var result = new ExcelReader(ExcelFilePath).Read(true);
+            var result = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(ExcelFilePath))).Read();
 
             result.ShouldAllBeEquivalentTo(expectedResult);
         }

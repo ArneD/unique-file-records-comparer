@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 using FluentAssertions;
 using UniqueFileRecordsComparer.Core.Readers;
 using Xunit;
@@ -16,10 +17,10 @@ namespace UniqueFileRecordsComparer.Core.IntegrationTests
         {
             CheckFilesExist();
 
-            var csvRowCollection = new CsvReader(CsvFileWithHeadersPath, ";").Read(true);
+            var csvRowCollection = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(CsvFileWithHeadersPath))).Read();
             csvRowCollection.Should().NotBeEmpty();
 
-            var excelRowCollection = new ExcelReader(ExcelFileWithHeadersPath).Read(true);
+            var excelRowCollection = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(ExcelFileWithHeadersPath))).Read();
             excelRowCollection.Should().NotBeEmpty();
 
             var compareTwoFields = new List<string> { "First name", "Last name" };
@@ -30,7 +31,7 @@ namespace UniqueFileRecordsComparer.Core.IntegrationTests
 
             var rowComparer = new RowCollectionComparer(csvRowCollection, excelRowCollection);
             var result = rowComparer.GetCollectionComparisonResult();
-
+            
             result.NewRows.ShouldAllBeEquivalentTo(new List<Row>
             {
                 new Row
@@ -49,7 +50,14 @@ namespace UniqueFileRecordsComparer.Core.IntegrationTests
                     new Column("First name", "Deleted"),
                     new Column("Last name", "Name"),
                     new Column("Address", "Hell 109")
-                }
+                },
+                new Row
+                {
+                    new Column("ID", "10"),
+                    new Column("First name", "John"),
+                    new Column("Last name", "Doe"),
+                    new Column("Address", "Not happy road 32")
+                },
             });
         }
 

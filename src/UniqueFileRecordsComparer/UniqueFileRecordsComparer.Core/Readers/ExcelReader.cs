@@ -1,41 +1,34 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
 using Excel;
 
 namespace UniqueFileRecordsComparer.Core.Readers
 {
-    public class ExcelReader : IFileReader
+    public class ExcelReader : IFileReader, IDisposable
     {
-        private readonly string _path;
+        private readonly IExcelDataReader _excelDataReader;
 
-        public ExcelReader(string path)
+        public ExcelReader(IExcelDataReader excelDataReader)
         {
-            _path = path;
+            _excelDataReader = excelDataReader;
         }
 
-        public RowCollection Read(bool hasHeaders)
+        public RowCollection Read()
         {
-            using (var stream = File.Open(_path, FileMode.Open, FileAccess.Read))
-            {
-                using (var excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream))
-                {
-                    excelReader.IsFirstRowAsColumnNames = hasHeaders;
-                    return new RowCollection(ExtractDataSet(excelReader).ToList());
-                }
-            }
+            return new RowCollection(ExtractDataSet().ToList());
         }
 
-        private static IEnumerable<Row> ExtractDataSet(IExcelDataReader excelReader)
+        private IEnumerable<Row> ExtractDataSet()
         {
-            using (var result = excelReader.AsDataSet())
+            using (var result = _excelDataReader.AsDataSet())
             {
                 return GetRows(result);
             }
         }
 
-        private static IEnumerable<Row> GetRows(DataSet result)
+        private IEnumerable<Row> GetRows(DataSet result)
         {
             var rows = new List<Row>();
             var dataTable = result.Tables[0];
@@ -54,5 +47,21 @@ namespace UniqueFileRecordsComparer.Core.Readers
 
             return rows;
         }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _excelDataReader?.Dispose();
+            }
+        }
+
+
     }
 }

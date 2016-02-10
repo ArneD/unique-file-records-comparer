@@ -30,30 +30,37 @@ namespace UniqueFileRecordsComparer.Core
             return result;
         }
 
-        private IEnumerable<Row> GetNewRows(ICollection<Row> equalRows)
+        private IEnumerable<Row> GetNewRows(IEnumerable<Row> equalRows)
         {
-            return _targetRowCollection.Where(targetRow => !equalRows.Contains(targetRow)).ToList();
+            return _targetRowCollection.Except(equalRows);
         }
 
         private void FillEqualAndDeletedRows(ICollection<Row> equalRows, ICollection<Row> deletedRows)
         {
-            foreach (var sourceRow in _sourceRowCollection)
+            foreach (var sourceRow in GetRowsOrderedByMaxLengthOfComparedColumns(_sourceRowCollection))
             {
-                var targetFound = false;
-                foreach (var targetRow in _targetRowCollection
-                                .Where(targetRow => sourceRow
-                                    .IsEqualTo(_sourceRowCollection.ColumnHeadersToCompare, targetRow, _targetRowCollection.ColumnHeadersToCompare)))
+                var targetRow = GetRowsOrderedByMaxLengthOfComparedColumns(_targetRowCollection)
+                    .Except(equalRows)
+                    .FirstOrDefault(row => sourceRow
+                        .IsEqualTo(_sourceRowCollection.ColumnHeadersToCompare, row,
+                            _targetRowCollection.ColumnHeadersToCompare));
+
+                if (targetRow != null)
                 {
                     equalRows.Add(targetRow);
-                    targetFound = true;
-                    break;
                 }
-
-                if (!targetFound)
+                else
                 {
                     deletedRows.Add(sourceRow);
                 }
             }
+        }
+
+        private IOrderedEnumerable<Row> GetRowsOrderedByMaxLengthOfComparedColumns(RowCollection collection)
+        {
+            return
+                collection.OrderByDescending(
+                    row => row.GetValueCombinations(collection.ColumnHeadersToCompare).Max(value => value.Length));
         }
     }
 }
