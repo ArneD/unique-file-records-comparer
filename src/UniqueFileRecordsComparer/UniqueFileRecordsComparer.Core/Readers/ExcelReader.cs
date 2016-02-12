@@ -28,7 +28,7 @@ namespace UniqueFileRecordsComparer.Core.Readers
             }
         }
 
-        private IEnumerable<Row> GetRows(DataSet result)
+        private static IEnumerable<Row> GetRows(DataSet result)
         {
             var rows = new List<Row>();
             var dataTable = result.Tables[0];
@@ -61,7 +61,5 @@ namespace UniqueFileRecordsComparer.Core.Readers
                 _excelDataReader?.Dispose();
             }
         }
-
-
     }
 }

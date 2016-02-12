@@ -56,7 +56,7 @@ namespace UniqueFileRecordsComparer.Core
             }
         }
 
-        private IOrderedEnumerable<Row> GetRowsOrderedByMaxLengthOfComparedColumns(RowCollection collection)
+        private static IEnumerable<Row> GetRowsOrderedByMaxLengthOfComparedColumns(RowCollection collection)
         {
             return
                 collection.OrderByDescending(

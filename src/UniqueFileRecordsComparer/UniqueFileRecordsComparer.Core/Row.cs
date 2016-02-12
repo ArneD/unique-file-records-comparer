@@ -24,7 +24,7 @@ namespace UniqueFileRecordsComparer.Core
                 return valuesToCombine;
             }
 
-            for (int i = 0; i < valuesToCombine.Count; i++)
+            for (var i = 0; i < valuesToCombine.Count; i++)
             {
                 for (var j = 0; j < valuesToCombine.Count; j++)
                 {
@@ -54,7 +54,7 @@ namespace UniqueFileRecordsComparer.Core
             return allValues.All(value => RemoveDiacritics(target).IndexOf(RemoveDiacritics(value), StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
-        static string RemoveDiacritics(string text)
+        private static string RemoveDiacritics(string text)
         {
             return string.Concat(
                 text.Normalize(NormalizationForm.FormD)
