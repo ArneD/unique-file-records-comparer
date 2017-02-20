@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using UniqueFileRecordsComparer.Core;
 using UniqueFileRecordsComparer.Core.Readers;
@@ -38,11 +39,11 @@ namespace UniqueFileRecordsComparer.App
             }
         }
 
-        private void Compare_Click(object sender, System.EventArgs e)
+        private async void Compare_Click(object sender, System.EventArgs e)
         {
             if (IsFormValid())
             {
-                var comparisonResult = CompareFiles();
+                var comparisonResult = await CompareFiles();
                 var resultForm = new ComparisonResultsForm(comparisonResult);
                 resultForm.Show();
                 Hide();
@@ -59,13 +60,16 @@ namespace UniqueFileRecordsComparer.App
                    TargetColumnsCheckList.CheckedItems.Count > 0;
         }
 
-        private RowCollectionComparisonResult CompareFiles()
+        private Task<RowCollectionComparisonResult> CompareFiles()
         {
-            _sourceRowCollection.ColumnHeadersToCompare = SourceColumnsCheckList.CheckedItems.Cast<string>().ToList();
-            _targetRowCollection.ColumnHeadersToCompare = TargetColumnsCheckList.CheckedItems.Cast<string>().ToList();
+            return Task.Run(() =>
+            {
+                _sourceRowCollection.ColumnHeadersToCompare = SourceColumnsCheckList.CheckedItems.Cast<string>().ToList();
+                _targetRowCollection.ColumnHeadersToCompare = TargetColumnsCheckList.CheckedItems.Cast<string>().ToList();
 
-            var comparer = new RowCollectionComparer(_sourceRowCollection, _targetRowCollection);
-            return comparer.GetCollectionComparisonResult();
+                var comparer = new RowCollectionComparer(_sourceRowCollection, _targetRowCollection);
+                return comparer.GetCollectionComparisonResult();
+            });
         }
     }
 }
