@@ -1,8 +1,6 @@
-using System;
-
 namespace UniqueFileRecordsComparer.Core.Readers
 {
-    public interface IFileReader : IDisposable
+    public interface IFileReader
     {
         RowCollection Read();
     }

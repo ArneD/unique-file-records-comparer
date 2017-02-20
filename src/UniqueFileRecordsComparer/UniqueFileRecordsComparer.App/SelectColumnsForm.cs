@@ -17,15 +17,13 @@ namespace UniqueFileRecordsComparer.App
         {
             InitializeComponent();
 
-            using (var sourceReader = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(comparerArguments.SourceFilePath))))
-            {
-                _sourceRowCollection = sourceReader.Read();
-            }
+            var sourceReader =
+                FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(comparerArguments.SourceFilePath)));
+            var targetReader =
+                FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(comparerArguments.TargetFilePath)));
 
-            using (var targetReader = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(comparerArguments.TargetFilePath))))
-            {
-                _targetRowCollection = targetReader.Read();
-            }
+            _sourceRowCollection = sourceReader.Read();
+            _targetRowCollection = targetReader.Read();
 
             AddColumnsToCheckList(SourceColumnsCheckList, _sourceRowCollection);
             AddColumnsToCheckList(TargetColumnsCheckList, _targetRowCollection);

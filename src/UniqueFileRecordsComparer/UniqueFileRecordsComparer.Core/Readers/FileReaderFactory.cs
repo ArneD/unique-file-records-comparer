@@ -1,8 +1,5 @@
 ﻿using System;
-using System.IO;
 using System.IO.Abstractions;
-using CsvHelper.Configuration;
-using Excel;
 
 namespace UniqueFileRecordsComparer.Core.Readers
 {
@@ -12,20 +9,12 @@ namespace UniqueFileRecordsComparer.Core.Readers
         {
             if (IsCsvFile(fileInfoBase.FullName))
             {
-                var reader = new CsvHelper.CsvReader(new StreamReader(fileInfoBase.OpenRead()), new CsvConfiguration
-                {
-                    HasHeaderRecord = true,
-                    Delimiter = ";"
-                });
-
-                return new CsvReader(reader);
+                return new CsvReader(fileInfoBase);
             }
 
             if (IsExcelFile(fileInfoBase.FullName))
             {
-                var excelReader = ExcelReaderFactory.CreateOpenXmlReader(fileInfoBase.Open(FileMode.Open, FileAccess.Read));
-                excelReader.IsFirstRowAsColumnNames = true;
-                return new ExcelReader(excelReader);
+                return new ExcelReader(fileInfoBase);
             }
 
             throw new InvalidOperationException();

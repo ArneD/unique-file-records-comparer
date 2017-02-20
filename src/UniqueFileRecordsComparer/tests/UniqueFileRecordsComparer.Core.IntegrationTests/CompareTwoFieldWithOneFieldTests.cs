@@ -63,12 +63,9 @@ namespace UniqueFileRecordsComparer.Core.IntegrationTests
 
         private static RowCollection ReadRowCollection(string path)
         {
-            RowCollection csvRowCollection;
-            using (var reader = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(path))))
-            {
-                csvRowCollection = reader.Read();
-            }
-            return csvRowCollection;
+            var reader = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(path)));
+
+            return reader.Read();
         }
 
         private static void CheckFilesExist()

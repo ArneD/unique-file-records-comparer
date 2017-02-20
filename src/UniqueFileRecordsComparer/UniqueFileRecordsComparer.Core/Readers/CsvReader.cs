@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using CsvHelper;
+using CsvHelper.Configuration;
 
 namespace UniqueFileRecordsComparer.Core.Readers
 {
     public class CsvReader : IFileReader
     {
-        private readonly ICsvReader _reader;
+        private readonly FileInfoBase _fileInfo;
 
-        public CsvReader(ICsvReader reader)
+        public CsvReader(FileInfoBase fileInfo)
         {
-            _reader = reader;
+            _fileInfo = fileInfo;
         }
 
         public RowCollection Read()
@@ -22,32 +25,35 @@ namespace UniqueFileRecordsComparer.Core.Readers
 
         private IEnumerable<Row> ReadCsv()
         {
-            var rows = new List<Row>();
-            while (_reader.Read())
+            using (var reader = CreateCsvReader())
             {
-                var row = new Row();
-                for (var i = 0; i < _reader.CurrentRecord.Length; i++)
+                var rows = new List<Row>();
+                while (reader.Read())
                 {
-                    row.Add(new Column(_reader.FieldHeaders[i], _reader.CurrentRecord[i].Trim()));
+                    rows.Add(GetRow(reader));
                 }
-                rows.Add(row);
+
+                return rows;
             }
-
-            return rows;
         }
 
-        public void Dispose()
+        private static Row GetRow(ICsvReader csvReader)
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
+            var row = new Row();
+            for (var i = 0; i < csvReader.CurrentRecord.Length; i++)
             {
-                _reader?.Dispose();
+                row.Add(new Column(csvReader.FieldHeaders[i], csvReader.CurrentRecord[i].Trim()));
             }
+            return row;
+        }
+
+        private CsvHelper.CsvReader CreateCsvReader()
+        {
+            return new CsvHelper.CsvReader(new StreamReader(_fileInfo.OpenRead()), new CsvConfiguration
+            {
+                HasHeaderRecord = true,
+                Delimiter = ";"
+            });
         }
     }
 }

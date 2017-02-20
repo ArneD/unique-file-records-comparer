@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
+using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using Excel;
 
@@ -8,11 +9,11 @@ namespace UniqueFileRecordsComparer.Core.Readers
 {
     public class ExcelReader : IFileReader
     {
-        private readonly IExcelDataReader _excelDataReader;
+        private readonly FileInfoBase _fileInfo;
 
-        public ExcelReader(IExcelDataReader excelDataReader)
+        public ExcelReader(FileInfoBase fileInfo)
         {
-            _excelDataReader = excelDataReader;
+            _fileInfo = fileInfo;
         }
 
         public RowCollection Read()
@@ -22,44 +23,36 @@ namespace UniqueFileRecordsComparer.Core.Readers
 
         private IEnumerable<Row> ExtractDataSet()
         {
-            using (var result = _excelDataReader.AsDataSet())
+            using (var excelReader = ExcelReaderFactory.CreateOpenXmlReader(_fileInfo.Open(FileMode.Open, FileAccess.Read)))
             {
-                return GetRows(result);
+                excelReader.IsFirstRowAsColumnNames = true;
+                using (var result = excelReader.AsDataSet())
+                {
+                    return GetRows(result);
+                }
             }
         }
 
         private static IEnumerable<Row> GetRows(DataSet result)
         {
-            var rows = new List<Row>();
             var dataTable = result.Tables[0];
 
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                var row = new Row();
-                var i = 0;
-                foreach (var item in dataRow.ItemArray)
-                {
-                    row.Add(new Column(dataTable.Columns[i].ColumnName, item.ToString().Trim()));
-                    i++;
-                }
-                rows.Add(row);
-            }
-
-            return rows;
+            return dataTable
+                    .Rows
+                    .Cast<DataRow>()
+                    .Select(GetRow);
         }
 
-        public void Dispose()
+        private static Row GetRow(DataRow dataRow)
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
+            var row = new Row();
+            var i = 0;
+            foreach (var item in dataRow.ItemArray)
             {
-                _excelDataReader?.Dispose();
+                row.Add(new Column(dataRow.Table.Columns[i].ColumnName, item.ToString().Trim()));
+                i++;
             }
+            return row;
         }
     }
 }
