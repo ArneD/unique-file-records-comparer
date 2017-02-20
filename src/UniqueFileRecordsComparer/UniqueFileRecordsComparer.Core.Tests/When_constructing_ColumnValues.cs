@@ -14,7 +14,7 @@ namespace UniqueFileRecordsComparer.Core.Tests
 
             var columnValues = new ColumnValues(expectedheader, expectedValues);
 
-            columnValues.Header.Should().Be(expectedheader);\
+            columnValues.Header.Should().Be(expectedheader);
             columnValues.Values.Should().BeEquivalentTo(expectedValues);
         }
     }
