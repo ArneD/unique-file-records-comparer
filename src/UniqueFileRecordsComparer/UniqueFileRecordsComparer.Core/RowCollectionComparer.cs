@@ -7,6 +7,8 @@ namespace UniqueFileRecordsComparer.Core
     {
         private readonly RowCollection _sourceRowCollection;
         private readonly RowCollection _targetRowCollection;
+        private List<Row> _equalRows;
+        private List<Row> _deletedRows;
 
         public RowCollectionComparer(RowCollection sourceRowCollection, RowCollection targetRowCollection)
         {
@@ -16,43 +18,44 @@ namespace UniqueFileRecordsComparer.Core
 
         public RowCollectionComparisonResult GetCollectionComparisonResult()
         {
-            var result = new RowCollectionComparisonResult();
+            _equalRows = new List<Row>();
+            _deletedRows = new List<Row>();
 
-            var equalRows = new List<Row>();
-            var deletedRows = new List<Row>();
+            CompareSourceWithTargetRows();
 
-            FillEqualAndDeletedRows(equalRows, deletedRows);
-
-            result.NewRows = GetNewRows(equalRows);
-            result.DeletedRows = deletedRows;
-            result.EqualRows = equalRows;
-
-            return result;
+            return new RowCollectionComparisonResult(GetNewRows(), _deletedRows, _equalRows);
         }
 
-        private IEnumerable<Row> GetNewRows(IEnumerable<Row> equalRows)
+        private IEnumerable<Row> GetNewRows()
         {
-            return _targetRowCollection.Except(equalRows);
+            return _targetRowCollection.Except(_equalRows);
         }
 
-        private void FillEqualAndDeletedRows(ICollection<Row> equalRows, ICollection<Row> deletedRows)
+        private void CompareSourceWithTargetRows()
         {
+            var targetRowsOrderedByMaxLengthOfComparedColumns = GetRowsOrderedByMaxLengthOfComparedColumns(_targetRowCollection).ToList();
+
             foreach (var sourceRow in GetRowsOrderedByMaxLengthOfComparedColumns(_sourceRowCollection))
             {
-                var targetRow = GetRowsOrderedByMaxLengthOfComparedColumns(_targetRowCollection)
-                    .Except(equalRows)
+                var targetRow = targetRowsOrderedByMaxLengthOfComparedColumns
+                    .Except(_equalRows)
                     .FirstOrDefault(row => sourceRow
                         .IsEqualTo(_sourceRowCollection.ColumnHeadersToCompare, row,
                             _targetRowCollection.ColumnHeadersToCompare));
 
-                if (targetRow != null)
-                {
-                    equalRows.Add(targetRow);
-                }
-                else
-                {
-                    deletedRows.Add(sourceRow);
-                }
+                FillEqualOrDeletedRows(targetRow, sourceRow);
+            }
+        }
+
+        private void FillEqualOrDeletedRows(Row targetRow, Row sourceRow)
+        {
+            if (targetRow != null)
+            {
+                _equalRows.Add(targetRow);
+            }
+            else
+            {
+                _deletedRows.Add(sourceRow);
             }
         }
 

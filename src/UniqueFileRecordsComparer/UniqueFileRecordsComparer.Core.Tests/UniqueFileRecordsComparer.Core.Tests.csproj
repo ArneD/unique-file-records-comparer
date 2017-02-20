@@ -86,6 +86,7 @@
     <Compile Include="RowTests\When_getting_ColumnHeaders.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="When_constructing_ColumnValues.cs" />
+    <Compile Include="When_constructing_RowCollectionComparisonResult.cs" />
     <Compile Include="WriterTests\When_creating_CsvWriter.cs" />
     <Compile Include="WriterTests\When_writing_to_csv.cs" />
   </ItemGroup>
