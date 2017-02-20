@@ -44,10 +44,10 @@ namespace UniqueFileRecordsComparer.Core
             var targetCombinations = targetRow.GetValueCombinations(targetColumnHeadersToCompare);
             return (GetValueCombinations(rowColumnHeadersToCompare)
                 .Any(x => targetCombinations.Any(y => RemoveDiacritics(x).IndexOf(RemoveDiacritics(y), StringComparison.OrdinalIgnoreCase) >= 0))
-                    || targetCombinations.Any(target => HasTargetStringAllHeaders(target, rowColumnHeadersToCompare)));
+                    || targetCombinations.Any(target => IsTargetInValuesOfColumnsToCompare(target, rowColumnHeadersToCompare)));
         }
 
-        private bool HasTargetStringAllHeaders(string target, IEnumerable<string> rowColumnHeadersToCompare)
+        private bool IsTargetInValuesOfColumnsToCompare(string target, IEnumerable<string> rowColumnHeadersToCompare)
         {
             var allValues = rowColumnHeadersToCompare.Select(GetColumnValueByHeader).ToList();
 
