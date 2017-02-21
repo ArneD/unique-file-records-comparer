@@ -33,4 +33,4 @@ Then select which columns to compare
 
 Result
 
-![Result](https://github.com/ArneD/unique-file-records-comparer/blob/master/assets/selectColumns.PNG "Result")
+![Result](https://github.com/ArneD/unique-file-records-comparer/blob/master/assets/result.PNG "Result")
