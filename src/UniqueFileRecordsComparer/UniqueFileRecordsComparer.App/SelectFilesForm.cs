@@ -1,5 +1,9 @@
 ﻿using System;
+using System.IO;
+using System.IO.Abstractions;
+using System.Linq;
 using System.Windows.Forms;
+using UniqueFileRecordsComparer.Core.Readers;
 
 namespace UniqueFileRecordsComparer.App
 {
@@ -17,12 +21,33 @@ namespace UniqueFileRecordsComparer.App
         {
             _comparerArguments.SourceFilePath = GetFilePathFromDialog();
             SourceFilePathLabel.Text = _comparerArguments.SourceFilePath;
+
+            FillTabs(SourceFileTabsDropDown, _comparerArguments.SourceFilePath);
         }
 
         private void ChooseTargetFileButton_Click(object sender, EventArgs e)
         {
             _comparerArguments.TargetFilePath = GetFilePathFromDialog();
             TargetFilePathLabel.Text = _comparerArguments.TargetFilePath;
+
+            FillTabs(TargetFileTabsDropDown, _comparerArguments.TargetFilePath);
+        }
+
+        private void FillTabs(ComboBox fileTabsDropDown, string path)
+        {
+            fileTabsDropDown.Items.Clear();
+            fileTabsDropDown.Enabled = false;
+
+            var fileReader = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(path)));
+            if (fileReader.GetTabNamesByIndex().Keys.Count > 1)
+            {
+                foreach (var tab in fileReader.GetTabNamesByIndex())
+                {
+                    fileTabsDropDown.Items.Insert(tab.Key, tab.Value);
+                }
+                fileTabsDropDown.Enabled = true;
+                fileTabsDropDown.SelectedIndex = 0;
+            }
         }
 
         private static string GetFilePathFromDialog()
@@ -34,7 +59,7 @@ namespace UniqueFileRecordsComparer.App
                 dialog.Filter = @"Data file |*.csv;*.xlsx";
 
                 var result = dialog.ShowDialog();
-                
+
                 if(result == DialogResult.OK)
                     return dialog.FileName;
             }
@@ -45,6 +70,9 @@ namespace UniqueFileRecordsComparer.App
         {
             if (IsFormValid())
             {
+                _comparerArguments.SourceFileTabIndex = SourceFileTabsDropDown.SelectedIndex;
+                _comparerArguments.TargetFileTabIndex = TargetFileTabsDropDown.SelectedIndex;
+
                 var selectColumnsForm = new SelectColumnsForm(_comparerArguments);
                 selectColumnsForm.Show();
                 Hide();
@@ -57,7 +85,7 @@ namespace UniqueFileRecordsComparer.App
 
         private bool IsFormValid()
         {
-            return !string.IsNullOrEmpty(_comparerArguments.SourceFilePath) && 
+            return !string.IsNullOrEmpty(_comparerArguments.SourceFilePath) &&
                    !string.IsNullOrEmpty(_comparerArguments.TargetFilePath);
         }
     }

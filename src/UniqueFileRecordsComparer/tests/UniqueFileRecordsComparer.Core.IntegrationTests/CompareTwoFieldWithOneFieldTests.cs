@@ -65,7 +65,7 @@ namespace UniqueFileRecordsComparer.Core.IntegrationTests
         {
             var reader = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(path)));
 
-            return reader.Read();
+            return reader.Read(0);
         }
 
         private static void CheckFilesExist()

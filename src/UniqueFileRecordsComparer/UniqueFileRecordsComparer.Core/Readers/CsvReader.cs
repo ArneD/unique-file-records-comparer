@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
@@ -17,10 +18,15 @@ namespace UniqueFileRecordsComparer.Core.Readers
             _fileInfo = fileInfo;
         }
 
-        public RowCollection Read()
+        public RowCollection Read(int? tabIndex)
         {
             IList<Row> rows = ReadCsv().ToList();
             return new RowCollection(rows);
+        }
+
+        public IDictionary<int, string> GetTabNamesByIndex()
+        {
+            return new Dictionary<int, string>();
         }
 
         private IEnumerable<Row> ReadCsv()

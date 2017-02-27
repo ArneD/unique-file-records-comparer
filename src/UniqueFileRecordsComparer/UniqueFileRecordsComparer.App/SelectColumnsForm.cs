@@ -22,8 +22,8 @@ namespace UniqueFileRecordsComparer.App
             var targetReader =
                 FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(comparerArguments.TargetFilePath)));
 
-            _sourceRowCollection = sourceReader.Read();
-            _targetRowCollection = targetReader.Read();
+            _sourceRowCollection = sourceReader.Read(comparerArguments.SourceFileTabIndex);
+            _targetRowCollection = targetReader.Read(comparerArguments.TargetFileTabIndex);
 
             AddColumnsToCheckList(SourceColumnsCheckList, _sourceRowCollection);
             AddColumnsToCheckList(TargetColumnsCheckList, _targetRowCollection);

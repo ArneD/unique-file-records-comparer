@@ -72,6 +72,7 @@
     <Compile Include="ReaderTests\When_reading_csv_file.cs" />
     <Compile Include="ReaderTests\When_reading_excel_file.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="When_getting_tab_names_by_index.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -79,6 +80,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TestFiles\OneFieldXlsxWithHeaders.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\FileWithMultipleTabs.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -16,28 +16,41 @@ namespace UniqueFileRecordsComparer.Core.Readers
             _fileInfo = fileInfo;
         }
 
-        public RowCollection Read()
+        public RowCollection Read(int? tabIndex)
         {
-            return new RowCollection(ExtractDataSet().ToList());
+            return new RowCollection(ExtractDataSet(tabIndex ?? 0).ToList());
         }
 
-        private IEnumerable<Row> ExtractDataSet()
+        public IDictionary<int, string> GetTabNamesByIndex()
+        {
+            var dictionary = new Dictionary<int, string>();
+            int index = 0;
+            using (var excelReader = ExcelReaderFactory.CreateOpenXmlReader(_fileInfo.OpenRead()))
+            {
+                foreach (DataTable table in excelReader.AsDataSet().Tables)
+                {
+                    dictionary.Add(index++, table.TableName);
+                }
+            }
+
+            return dictionary;
+        }
+
+        private IEnumerable<Row> ExtractDataSet(int tabIndex)
         {
             using (var excelReader = ExcelReaderFactory.CreateOpenXmlReader(_fileInfo.Open(FileMode.Open, FileAccess.Read)))
             {
                 excelReader.IsFirstRowAsColumnNames = true;
-                using (var result = excelReader.AsDataSet())
+                using (var table = excelReader.AsDataSet().Tables[tabIndex])
                 {
-                    return GetRows(result);
+                    return GetRows(table);
                 }
             }
         }
 
-        private static IEnumerable<Row> GetRows(DataSet result)
+        private IEnumerable<Row> GetRows(DataTable table)
         {
-            var dataTable = result.Tables[0];
-
-            return dataTable
+            return table
                     .Rows
                     .Cast<DataRow>()
                     .Select(GetRow);

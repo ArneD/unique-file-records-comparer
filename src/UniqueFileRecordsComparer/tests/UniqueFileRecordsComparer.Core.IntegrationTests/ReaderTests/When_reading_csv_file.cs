@@ -67,7 +67,7 @@ namespace UniqueFileRecordsComparer.Core.IntegrationTests.ReaderTests
                 }
             };
 
-            var result = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(CsvFilePath))).Read();
+            var result = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(CsvFilePath))).Read(0);
 
             result.ShouldAllBeEquivalentTo(expectedResult);
         }
