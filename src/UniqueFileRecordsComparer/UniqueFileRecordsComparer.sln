@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniqueFileRecordsComparer.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniqueFileRecordsComparer.App", "UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj", "{FC8EF3D2-0FB5-4663-AEF6-95807C99C474}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniqueFileRecordsComparer.Core.Tests", "UniqueFileRecordsComparer.Core.Tests\UniqueFileRecordsComparer.Core.Tests.csproj", "{AB5DD7DF-2A4C-4433-85C1-E33A6A89D98E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniqueFileRecordsComparer.Core.Tests", "tests\UniqueFileRecordsComparer.Core.Tests\UniqueFileRecordsComparer.Core.Tests.csproj", "{AB5DD7DF-2A4C-4433-85C1-E33A6A89D98E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
