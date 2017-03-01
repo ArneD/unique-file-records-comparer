@@ -3,9 +3,9 @@ using System.IO.Abstractions;
 
 namespace UniqueFileRecordsComparer.Core.Readers
 {
-    public static class FileReaderFactory
+    public class FileReaderFactory : IFileReaderFactory
     {
-        public static IFileReader CreateFromFileName(FileInfoBase fileInfoBase)
+        public IFileReader CreateFromFileName(FileInfoBase fileInfoBase)
         {
             if (IsCsvFile(fileInfoBase.FullName))
             {

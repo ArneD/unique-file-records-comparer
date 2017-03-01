@@ -2,7 +2,12 @@
   <Settings>
     <AllowParallelTestExecution>True</AllowParallelTestExecution>
     <MetricsExclusionList>
-      <Value>UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
+      <Value>ComparisonResultsForm.Designer.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
+      <Value>ComparisonResultsForm.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
+      <Value>SelectFiles\SelectFilesForm.Designer.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
+      <Value>SelectFiles\SelectFilesForm.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
+      <Value>SelectColumnsForm.Designer.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
+      <Value>SelectColumnsForm.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
     </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>

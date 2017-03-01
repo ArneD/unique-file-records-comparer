@@ -23,21 +23,21 @@ namespace UniqueFileRecordsComparer.Core.Tests.ReaderTests
         [Fact]
         public void Given_FileName_ends_with_dot_csv_Then_returns_CsvReader()
         {
-            var reader = FileReaderFactory.CreateFromFileName(_fileFactory.FromFileName("test.csv"));
+            var reader = new FileReaderFactory().CreateFromFileName(_fileFactory.FromFileName("test.csv"));
             reader.Should().BeOfType<CsvReader>();
         }
 
         [Fact]
         public void Given_FileName_ends_with_dot_xlsx_Then_returns_ExcelReader()
         {
-            var reader = FileReaderFactory.CreateFromFileName(_fileFactory.FromFileName("test.xlsx"));
+            var reader = new FileReaderFactory().CreateFromFileName(_fileFactory.FromFileName("test.xlsx"));
             reader.Should().BeOfType<ExcelReader>();
         }
 
         [Fact]
         public void Given_FileName_ends_with_invalid_extension_Then_returns_InvalidOperationException()
         {
-            Assert.Throws<InvalidOperationException>(() => FileReaderFactory.CreateFromFileName(_fileFactory.FromFileName("test.txt")));
+            Assert.Throws<InvalidOperationException>(() => new FileReaderFactory().CreateFromFileName(_fileFactory.FromFileName("test.txt")));
         }
     }
 }

@@ -54,7 +54,7 @@ namespace UniqueFileRecordsComparer.Core.IntegrationTests.ReaderTests
                 }
             };
 
-            var result = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(ExcelFilePath))).Read(0);
+            var result = new FileReaderFactory().CreateFromFileName(new FileInfoWrapper(new FileInfo(ExcelFilePath))).Read(0);
 
             result.ShouldAllBeEquivalentTo(expectedResult);
         }

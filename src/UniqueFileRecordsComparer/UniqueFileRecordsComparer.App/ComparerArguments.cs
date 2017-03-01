@@ -7,5 +7,7 @@ namespace UniqueFileRecordsComparer.App
 
         public int SourceFileTabIndex { get; set; }
         public int TargetFileTabIndex { get; set; }
+
+        public bool IsValid => !string.IsNullOrWhiteSpace(SourceFilePath) && !string.IsNullOrWhiteSpace(TargetFilePath);
     }
 }

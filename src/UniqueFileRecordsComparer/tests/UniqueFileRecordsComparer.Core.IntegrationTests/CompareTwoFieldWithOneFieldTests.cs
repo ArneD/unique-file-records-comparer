@@ -63,7 +63,7 @@ namespace UniqueFileRecordsComparer.Core.IntegrationTests
 
         private static RowCollection ReadRowCollection(string path)
         {
-            var reader = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(path)));
+            var reader = new FileReaderFactory().CreateFromFileName(new FileInfoWrapper(new FileInfo(path)));
 
             return reader.Read(0);
         }

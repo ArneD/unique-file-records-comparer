@@ -18,9 +18,9 @@ namespace UniqueFileRecordsComparer.App
             InitializeComponent();
 
             var sourceReader =
-                FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(comparerArguments.SourceFilePath)));
+                new FileReaderFactory().CreateFromFileName(new FileInfoWrapper(new FileInfo(comparerArguments.SourceFilePath)));
             var targetReader =
-                FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(comparerArguments.TargetFilePath)));
+                new FileReaderFactory().CreateFromFileName(new FileInfoWrapper(new FileInfo(comparerArguments.TargetFilePath)));
 
             _sourceRowCollection = sourceReader.Read(comparerArguments.SourceFileTabIndex);
             _targetRowCollection = targetReader.Read(comparerArguments.TargetFileTabIndex);

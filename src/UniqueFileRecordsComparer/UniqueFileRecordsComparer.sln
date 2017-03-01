@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5D0DC7F4-4BCC-4C47-8430-65BB49E240C5}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniqueFileRecordsComparer.App", "UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj", "{FC8EF3D2-0FB5-4663-AEF6-95807C99C474}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniqueFileRecordsComparer.Core.Tests", "tests\UniqueFileRecordsComparer.Core.Tests\UniqueFileRecordsComparer.Core.Tests.csproj", "{AB5DD7DF-2A4C-4433-85C1-E33A6A89D98E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniqueFileRecordsComparer.App.Tests", "UniqueFileRecordsComparer.App.Tests\UniqueFileRecordsComparer.App.Tests.csproj", "{907F1080-CBC0-4528-A892-FDA2A73C8261}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{AB5DD7DF-2A4C-4433-85C1-E33A6A89D98E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB5DD7DF-2A4C-4433-85C1-E33A6A89D98E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB5DD7DF-2A4C-4433-85C1-E33A6A89D98E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{907F1080-CBC0-4528-A892-FDA2A73C8261}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{907F1080-CBC0-4528-A892-FDA2A73C8261}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{907F1080-CBC0-4528-A892-FDA2A73C8261}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{907F1080-CBC0-4528-A892-FDA2A73C8261}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,5 +48,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{5482EA15-9C03-4F5E-9316-C78D91253AAD} = {5D0DC7F4-4BCC-4C47-8430-65BB49E240C5}
 		{AB5DD7DF-2A4C-4433-85C1-E33A6A89D98E} = {5D0DC7F4-4BCC-4C47-8430-65BB49E240C5}
+		{907F1080-CBC0-4528-A892-FDA2A73C8261} = {5D0DC7F4-4BCC-4C47-8430-65BB49E240C5}
 	EndGlobalSection
 EndGlobal

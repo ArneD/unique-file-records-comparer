@@ -22,7 +22,7 @@ namespace UniqueFileRecordsComparer.Core.IntegrationTests
                 { 2, "Tab3" }
             };
 
-            var reader = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(XlsxWithMultipeTabsPath)));
+            var reader = new FileReaderFactory().CreateFromFileName(new FileInfoWrapper(new FileInfo(XlsxWithMultipeTabsPath)));
 
             reader.GetTabNamesByIndex().ShouldAllBeEquivalentTo(expectedDictionary);
         }
@@ -30,7 +30,7 @@ namespace UniqueFileRecordsComparer.Core.IntegrationTests
         [Fact]
         public void Given_csv_file_Then_empty_dictionary_is_expected()
         {
-            var reader = FileReaderFactory.CreateFromFileName(new FileInfoWrapper(new FileInfo(CsvFilePath)));
+            var reader = new FileReaderFactory().CreateFromFileName(new FileInfoWrapper(new FileInfo(CsvFilePath)));
 
             reader.GetTabNamesByIndex().ShouldAllBeEquivalentTo(new Dictionary<int, string>());
         }
