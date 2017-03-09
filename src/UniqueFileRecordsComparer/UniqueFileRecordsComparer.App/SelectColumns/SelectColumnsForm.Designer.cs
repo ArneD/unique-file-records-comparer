@@ -1,4 +1,4 @@
-﻿namespace UniqueFileRecordsComparer.App
+﻿namespace UniqueFileRecordsComparer.App.SelectColumns
 {
     partial class SelectColumnsForm
     {

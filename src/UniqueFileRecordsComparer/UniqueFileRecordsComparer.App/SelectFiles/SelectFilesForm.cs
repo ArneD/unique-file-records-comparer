@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
+using UniqueFileRecordsComparer.App.SelectColumns;
+using UniqueFileRecordsComparer.Core.Readers;
 
 namespace UniqueFileRecordsComparer.App.SelectFiles
 {
@@ -27,19 +28,20 @@ namespace UniqueFileRecordsComparer.App.SelectFiles
         {
             if (Presenter.IsViewValid)
             {
-                var selectColumnsForm = new SelectColumnsForm(new ComparerArguments
+                var selectColumnsForm = new SelectColumnsForm();
+                var presenter = new SelectColumnsPresenter(selectColumnsForm, new FileReaderFactory());
+                presenter.Load(new ComparerArguments
                 {
                     SourceFilePath = SourceFilePath,
                     TargetFilePath = TargetFilePath,
                     SourceFileTabIndex = SelectedSourceFileTabIndex,
                     TargetFileTabIndex = SelectedTargetFileTabIndex
                 });
-                selectColumnsForm.Show();
                 Hide();
             }
             else
             {
-                MessageBox.Show("Please select a source and a target file");
+                MessageBox.Show("Please select a source and a target file", "Select a file", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

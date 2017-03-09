@@ -78,11 +78,13 @@
     </Compile>
     <Compile Include="Messages\OpenFileMessage.cs" />
     <Compile Include="Messages\OpenFileMessageHandler.cs" />
+    <Compile Include="SelectColumns\ISelectColumnsView.cs" />
+    <Compile Include="SelectColumns\SelectColumnsPresenter.cs" />
     <Compile Include="SelectFiles\ISelectFilesView.cs" />
-    <Compile Include="SelectColumnsForm.cs">
+    <Compile Include="SelectColumns\SelectColumnsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SelectColumnsForm.Designer.cs">
+    <Compile Include="SelectColumns\SelectColumnsForm.Designer.cs">
       <DependentUpon>SelectColumnsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SelectFiles\SelectFilesForm.cs">
@@ -97,7 +99,7 @@
     <EmbeddedResource Include="ComparisonResultsForm.resx">
       <DependentUpon>ComparisonResultsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SelectColumnsForm.resx">
+    <EmbeddedResource Include="SelectColumns\SelectColumnsForm.resx">
       <DependentUpon>SelectColumnsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SelectFiles\SelectFilesForm.resx">
