@@ -23,16 +23,17 @@ namespace UniqueFileRecordsComparer.App.SelectFiles
 
         public void SelectSourcePath()
         {
-            _view.SourceFilePath = GetFilePathFromDialog();
+            var path = GetFilePathFromDialog();
 
-            _view.SourceFileTabs = GetTabs(_view.SourceFilePath).Values.ToList();
+            _view.SourceFilePath = path;
+            _view.SourceFileTabs = GetTabs(path).Values.ToList();
         }
 
         public void SelectTargetPath()
         {
-            _view.TargetFilePath = GetFilePathFromDialog();
-
-            _view.TargetFileTabs = GetTabs(_view.TargetFilePath).Values.ToList();
+            var path = GetFilePathFromDialog();
+            _view.TargetFilePath = path;
+            _view.TargetFileTabs = GetTabs(path).Values.ToList();
         }
 
         public bool IsViewValid => !string.IsNullOrWhiteSpace(_view.SourceFilePath) &&

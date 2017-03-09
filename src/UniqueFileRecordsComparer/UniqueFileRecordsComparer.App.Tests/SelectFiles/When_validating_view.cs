@@ -9,19 +9,19 @@ namespace UniqueFileRecordsComparer.App.Tests.SelectFiles
 {
     public class When_validating_view
     {
-        private readonly SelectFileViewStub _validView = new SelectFileViewStub
-        {
-            SourceFilePath = "Test",
-            TargetFilePath = "Test",
-            SelectedSourceFileTabIndex = 1,
-            SelectedTargetFileTabIndex = 0
-        };
+        private readonly Mock<ISelectFilesView> _validView = new Mock<ISelectFilesView>();
+        
 
         private readonly SelectFilesPresenter _presenter;
 
         public When_validating_view()
         {
-            _presenter = new SelectFilesPresenter(_validView, Mock.Of<IOpenFileMessageHandler>(), Mock.Of<IFileReaderFactory>());
+            _validView.SetupGet(x => x.SourceFilePath).Returns("Test");
+            _validView.SetupGet(x => x.TargetFilePath).Returns("Test");
+            _validView.SetupGet(x => x.SelectedSourceFileTabIndex).Returns(1);
+            _validView.SetupGet(x => x.SelectedTargetFileTabIndex).Returns(0);
+           
+            _presenter = new SelectFilesPresenter(_validView.Object, Mock.Of<IOpenFileMessageHandler>(), Mock.Of<IFileReaderFactory>());
         }
 
         [Fact]
@@ -33,7 +33,7 @@ namespace UniqueFileRecordsComparer.App.Tests.SelectFiles
         [Fact]
         public void Given_null_SourceFilePath_Then_returns_false()
         {
-            _validView.SourceFilePath = null;
+            _validView.SetupGet(x => x.SourceFilePath).Returns(() => null);
 
             _presenter.IsViewValid.Should().BeFalse();
         }
@@ -41,7 +41,7 @@ namespace UniqueFileRecordsComparer.App.Tests.SelectFiles
         [Fact]
         public void Given_empty_SourceFilePath_Then_returns_false()
         {
-            _validView.SourceFilePath = string.Empty;
+            _validView.SetupGet(x => x.SourceFilePath).Returns(string.Empty);
 
             _presenter.IsViewValid.Should().BeFalse();
         }
@@ -49,7 +49,7 @@ namespace UniqueFileRecordsComparer.App.Tests.SelectFiles
         [Fact]
         public void Given_whitespace_SourceFilePath_Then_returns_false()
         {
-            _validView.SourceFilePath = "   ";
+            _validView.SetupGet(x => x.SourceFilePath).Returns("    ");
 
             _presenter.IsViewValid.Should().BeFalse();
         }
@@ -57,7 +57,7 @@ namespace UniqueFileRecordsComparer.App.Tests.SelectFiles
         [Fact]
         public void Given_null_TargetFilePath_Then_returns_false()
         {
-            _validView.TargetFilePath = null;
+            _validView.SetupGet(x => x.TargetFilePath).Returns(() => null);
 
             _presenter.IsViewValid.Should().BeFalse();
         }
@@ -65,7 +65,7 @@ namespace UniqueFileRecordsComparer.App.Tests.SelectFiles
         [Fact]
         public void Given_empty_TargetFilePath_Then_returns_false()
         {
-            _validView.TargetFilePath = string.Empty;
+            _validView.SetupGet(x => x.TargetFilePath).Returns(string.Empty);
 
             _presenter.IsViewValid.Should().BeFalse();
         }
@@ -73,7 +73,7 @@ namespace UniqueFileRecordsComparer.App.Tests.SelectFiles
         [Fact]
         public void Given_whitespace_TargetFilePath_Then_returns_false()
         {
-            _validView.TargetFilePath = "   ";
+            _validView.SetupGet(x => x.TargetFilePath).Returns("    ");
 
             _presenter.IsViewValid.Should().BeFalse();
         }
@@ -81,7 +81,7 @@ namespace UniqueFileRecordsComparer.App.Tests.SelectFiles
         [Fact]
         public void Given_SelectedSourceFileTabIndex_is_less_than_0_Then_returns_false()
         {
-            _validView.SelectedSourceFileTabIndex = -1;
+            _validView.SetupGet(x => x.SelectedSourceFileTabIndex).Returns(-1);
 
             _presenter.IsViewValid.Should().BeFalse();
         }
@@ -89,7 +89,7 @@ namespace UniqueFileRecordsComparer.App.Tests.SelectFiles
         [Fact]
         public void Given_SelectedTargetFileTabIndex_is_less_than_0_Then_returns_false()
         {
-            _validView.SelectedTargetFileTabIndex = -100;
+            _validView.SetupGet(x => x.SelectedTargetFileTabIndex).Returns(-100);
 
             _presenter.IsViewValid.Should().BeFalse();
         }

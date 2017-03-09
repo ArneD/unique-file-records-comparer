@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO.Abstractions;
-using FluentAssertions;
+using System.Linq;
 using Moq;
 using UniqueFileRecordsComparer.App.Messages;
 using UniqueFileRecordsComparer.App.SelectFiles;
@@ -17,7 +17,7 @@ namespace UniqueFileRecordsComparer.App.Tests.SelectFiles
                 {0, "test" }
             };
 
-        private readonly SelectFileViewStub _view = new SelectFileViewStub();
+        private readonly Mock<ISelectFilesView> _viewMock = new Mock<ISelectFilesView>();
         private readonly SelectFilesPresenter _presenter;
 
         public When_selecting_paths()
@@ -32,7 +32,7 @@ namespace UniqueFileRecordsComparer.App.Tests.SelectFiles
             var fileReaderFactoryMock = new Mock<IFileReaderFactory>();
             fileReaderFactoryMock.Setup(factory => factory.CreateFromFileName(It.IsAny<FileInfoBase>())).Returns(fileReaderMock.Object);
 
-            _presenter = new SelectFilesPresenter(_view, openFileMessageMock.Object, fileReaderFactoryMock.Object);
+            _presenter = new SelectFilesPresenter(_viewMock.Object, openFileMessageMock.Object, fileReaderFactoryMock.Object);
         }
 
         [Fact]
@@ -40,8 +40,8 @@ namespace UniqueFileRecordsComparer.App.Tests.SelectFiles
         {
             _presenter.SelectSourcePath();
 
-            _view.SourceFilePath.Should().Be(_expectedFilePath);
-            _view.SourceFileTabs.ShouldAllBeEquivalentTo(_expectedTabs.Values);
+            _viewMock.VerifySet(x => x.SourceFilePath = _expectedFilePath);
+            _viewMock.VerifySet(x => x.SourceFileTabs = _expectedTabs.Values.ToList());
         }
 
         [Fact]
@@ -49,8 +49,8 @@ namespace UniqueFileRecordsComparer.App.Tests.SelectFiles
         {
             _presenter.SelectTargetPath();
 
-            _view.TargetFilePath.Should().Be(_expectedFilePath);
-            _view.TargetFileTabs.ShouldAllBeEquivalentTo(_expectedTabs.Values);
+            _viewMock.VerifySet(x => x.TargetFilePath = _expectedFilePath);
+            _viewMock.VerifySet(x => x.TargetFileTabs = _expectedTabs.Values.ToList());
         }
     }
 }
