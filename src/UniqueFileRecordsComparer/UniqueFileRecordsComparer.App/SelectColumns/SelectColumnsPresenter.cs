@@ -13,11 +13,13 @@ namespace UniqueFileRecordsComparer.App.SelectColumns
         private RowCollection _targetRowCollection;
         private readonly ISelectColumnsView _view;
         private readonly IFileReaderFactory _fileReaderFactory;
+        private readonly IRowCollectionComparer _rowCollectionComparer;
 
-        public SelectColumnsPresenter(ISelectColumnsView view, IFileReaderFactory fileReaderFactory)
+        public SelectColumnsPresenter(ISelectColumnsView view, IFileReaderFactory fileReaderFactory, IRowCollectionComparer rowCollectionComparer)
         {
             _view = view;
             _fileReaderFactory = fileReaderFactory;
+            _rowCollectionComparer = rowCollectionComparer;
             _view.Presenter = this;
         }
 
@@ -40,14 +42,10 @@ namespace UniqueFileRecordsComparer.App.SelectColumns
 
         public Task<RowCollectionComparisonResult> CompareFiles()
         {
-            return Task.Run(() =>
-            {
-                _sourceRowCollection.ColumnHeadersToCompare = _view.SourceCheckedColumns.ToList();
-                _targetRowCollection.ColumnHeadersToCompare = _view.TargetCheckedColumns.ToList();
+            _sourceRowCollection.ColumnHeadersToCompare = _view.SourceCheckedColumns.ToList();
+            _targetRowCollection.ColumnHeadersToCompare = _view.TargetCheckedColumns.ToList();
 
-                var comparer = new RowCollectionComparer(_sourceRowCollection, _targetRowCollection);
-                return comparer.GetCollectionComparisonResult();
-            });
+            return Task.Run(() => _rowCollectionComparer.GetCollectionComparisonResult(_sourceRowCollection, _targetRowCollection));
         }
     }
 }

@@ -3,21 +3,18 @@ using System.Linq;
 
 namespace UniqueFileRecordsComparer.Core
 {
-    public class RowCollectionComparer
+    public class RowCollectionComparer : IRowCollectionComparer
     {
-        private readonly RowCollection _sourceRowCollection;
-        private readonly RowCollection _targetRowCollection;
+        private RowCollection _sourceRowCollection;
+        private RowCollection _targetRowCollection;
         private List<Row> _equalRows;
         private List<Row> _deletedRows;
 
-        public RowCollectionComparer(RowCollection sourceRowCollection, RowCollection targetRowCollection)
+        public RowCollectionComparisonResult GetCollectionComparisonResult(RowCollection sourceRowCollection, RowCollection targetRowCollection)
         {
             _sourceRowCollection = sourceRowCollection;
             _targetRowCollection = targetRowCollection;
-        }
 
-        public RowCollectionComparisonResult GetCollectionComparisonResult()
-        {
             _equalRows = new List<Row>();
             _deletedRows = new List<Row>();
 

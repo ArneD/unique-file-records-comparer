@@ -77,8 +77,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectColumns\When_comparing_files.cs" />
+    <Compile Include="SelectColumns\When_loading.cs" />
     <Compile Include="SelectColumns\When_validating_view.cs" />
-    <Compile Include="SelectFiles\SelectFileViewStub.cs" />
     <Compile Include="SelectFiles\When_selecting_paths.cs" />
     <Compile Include="SelectFiles\When_validating_view.cs" />
   </ItemGroup>

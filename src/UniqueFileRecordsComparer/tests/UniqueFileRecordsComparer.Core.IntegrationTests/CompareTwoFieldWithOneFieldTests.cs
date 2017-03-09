@@ -29,8 +29,8 @@ namespace UniqueFileRecordsComparer.Core.IntegrationTests
             csvRowCollection.ColumnHeadersToCompare = compareTwoFields;
             excelRowCollection.ColumnHeadersToCompare = compareOneField;
 
-            var rowComparer = new RowCollectionComparer(csvRowCollection, excelRowCollection);
-            var result = rowComparer.GetCollectionComparisonResult();
+            var rowComparer = new RowCollectionComparer();
+            var result = rowComparer.GetCollectionComparisonResult(csvRowCollection, excelRowCollection);
 
             result.NewRows.ShouldAllBeEquivalentTo(new List<Row>
             {

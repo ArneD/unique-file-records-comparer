@@ -25,7 +25,7 @@ namespace UniqueFileRecordsComparer.Core.Tests.RowCollectionComparerTests
             var sourceCollection = new RowCollection(rows) {ColumnHeadersToCompare = compareColumn};
             var targetCollection = new RowCollection(rows) {ColumnHeadersToCompare = compareColumn};
 
-            var comparisonResult = new RowCollectionComparer(sourceCollection, targetCollection).GetCollectionComparisonResult();
+            var comparisonResult = new RowCollectionComparer().GetCollectionComparisonResult(sourceCollection, targetCollection);
 
             comparisonResult.EqualRows.ShouldAllBeEquivalentTo(rows);
         }

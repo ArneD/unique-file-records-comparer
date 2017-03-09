@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using UniqueFileRecordsComparer.App.SelectColumns;
+using UniqueFileRecordsComparer.Core;
 using UniqueFileRecordsComparer.Core.Readers;
 
 namespace UniqueFileRecordsComparer.App.SelectFiles
@@ -29,7 +30,7 @@ namespace UniqueFileRecordsComparer.App.SelectFiles
             if (Presenter.IsViewValid)
             {
                 var selectColumnsForm = new SelectColumnsForm();
-                var presenter = new SelectColumnsPresenter(selectColumnsForm, new FileReaderFactory());
+                var presenter = new SelectColumnsPresenter(selectColumnsForm, new FileReaderFactory(), new RowCollectionComparer());
                 presenter.Load(new ComparerArguments
                 {
                     SourceFilePath = SourceFilePath,

@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Column.cs" />
     <Compile Include="ColumnValues.cs" />
+    <Compile Include="IRowCollectionComparer.cs" />
     <Compile Include="Readers\CsvReader.cs" />
     <Compile Include="Readers\ExcelReader.cs" />
     <Compile Include="Readers\FileReaderFactory.cs" />
