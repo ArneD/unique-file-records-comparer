@@ -8,6 +8,9 @@
       <Value>SelectFiles\SelectFilesForm.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
       <Value>SelectColumnsForm.Designer.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
       <Value>SelectColumnsForm.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
+      <Value>UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj\Properties</Value>
+      <Value>SelectColumns\SelectColumnsForm.Designer.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
+      <Value>SelectColumns\SelectColumnsForm.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
     </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>
