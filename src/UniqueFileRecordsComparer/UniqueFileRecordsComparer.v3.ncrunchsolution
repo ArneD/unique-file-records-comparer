@@ -13,6 +13,8 @@
       <Value>SelectColumns\SelectColumnsForm.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
       <Value>ComparisonResults\ComparisonResultsForm.Designer.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
       <Value>ComparisonResults\ComparisonResultsForm.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
+      <Value>UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj\MessageHandlers</Value>
+      <Value>Program.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
     </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>
