@@ -14,7 +14,7 @@ namespace UniqueFileRecordsComparer.Core.Tests.WriterTests
             var mockFileDatas = new Dictionary<string, MockFileData>();
             var fileFactory = new MockFileInfoFactory(new MockFileSystem(mockFileDatas));
 
-            var writer = Writers.CsvWriter.Create(fileFactory.FromFileName("test.csv"));
+            var writer = new Writers.CsvWriterFactory().Create(fileFactory.FromFileName("test.csv"));
 
             writer.Should().NotBeNull();
             writer.Should().BeOfType<CsvWriter>();

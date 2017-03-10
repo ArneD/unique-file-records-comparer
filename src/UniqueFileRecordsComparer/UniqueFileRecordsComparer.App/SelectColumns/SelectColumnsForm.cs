@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using UniqueFileRecordsComparer.App.ComparisonResults;
+using UniqueFileRecordsComparer.App.Messages;
+using UniqueFileRecordsComparer.Core.Writers;
 
 namespace UniqueFileRecordsComparer.App.SelectColumns
 {
@@ -16,8 +19,9 @@ namespace UniqueFileRecordsComparer.App.SelectColumns
             if (Presenter.IsViewValid)
             {
                 var comparisonResult = await Presenter.CompareFiles();
-                var resultForm = new ComparisonResultsForm(comparisonResult);
-                resultForm.Show();
+                var resultForm = new ComparisonResultsForm();
+                var presenter = new ComparisonResultsPresenter(resultForm, new SaveFileMessageHandler(), new CsvWriterFactory());
+                presenter.Load(comparisonResult);
                 Hide();
             }
             else

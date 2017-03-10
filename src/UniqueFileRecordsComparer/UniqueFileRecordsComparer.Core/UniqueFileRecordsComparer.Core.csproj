@@ -69,7 +69,9 @@
     <Compile Include="Row.cs" />
     <Compile Include="RowCollectionComparisonResult.cs" />
     <Compile Include="RowCollectionComparer.cs" />
-    <Compile Include="Writers\CsvWriter.cs" />
+    <Compile Include="Writers\CsvWriterHelper.cs" />
+    <Compile Include="Writers\CsvWriterFactory.cs" />
+    <Compile Include="Writers\ICsvWriterFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

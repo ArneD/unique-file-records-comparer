@@ -70,14 +70,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComparerArguments.cs" />
-    <Compile Include="ComparisonResultsForm.cs">
+    <Compile Include="ComparisonResults\ComparisonResultsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ComparisonResultsForm.Designer.cs">
+    <Compile Include="ComparisonResults\ComparisonResultsForm.Designer.cs">
       <DependentUpon>ComparisonResultsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComparisonResults\ComparisonResultsPresenter.cs" />
+    <Compile Include="ComparisonResults\IComparisonResultsView.cs" />
     <Compile Include="Messages\OpenFileMessage.cs" />
     <Compile Include="Messages\OpenFileMessageHandler.cs" />
+    <Compile Include="Messages\SaveFileMessage.cs" />
     <Compile Include="SelectColumns\ISelectColumnsView.cs" />
     <Compile Include="SelectColumns\SelectColumnsPresenter.cs" />
     <Compile Include="SelectFiles\ISelectFilesView.cs" />
@@ -96,7 +99,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SelectFiles\SelectFilesPresenter.cs" />
-    <EmbeddedResource Include="ComparisonResultsForm.resx">
+    <EmbeddedResource Include="ComparisonResults\ComparisonResultsForm.resx">
       <DependentUpon>ComparisonResultsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SelectColumns\SelectColumnsForm.resx">

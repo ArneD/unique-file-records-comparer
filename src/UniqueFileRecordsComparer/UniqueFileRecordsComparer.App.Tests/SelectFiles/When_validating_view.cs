@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using FluentAssertions;
 using Moq;
 using UniqueFileRecordsComparer.App.Messages;
 using UniqueFileRecordsComparer.App.SelectFiles;
@@ -19,8 +20,10 @@ namespace UniqueFileRecordsComparer.App.Tests.SelectFiles
             _validView.SetupGet(x => x.SourceFilePath).Returns("Test");
             _validView.SetupGet(x => x.TargetFilePath).Returns("Test");
             _validView.SetupGet(x => x.SelectedSourceFileTabIndex).Returns(1);
+            _validView.SetupGet(x => x.SourceFileTabs).Returns(new List<string> {"A"});
             _validView.SetupGet(x => x.SelectedTargetFileTabIndex).Returns(0);
-           
+            _validView.SetupGet(x => x.TargetFileTabs).Returns(new List<string> { "A" });
+
             _presenter = new SelectFilesPresenter(_validView.Object, Mock.Of<IOpenFileMessageHandler>(), Mock.Of<IFileReaderFactory>());
         }
 

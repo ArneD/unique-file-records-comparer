@@ -38,8 +38,8 @@ namespace UniqueFileRecordsComparer.App.SelectFiles
 
         public bool IsViewValid => !string.IsNullOrWhiteSpace(_view.SourceFilePath) &&
             !string.IsNullOrWhiteSpace(_view.TargetFilePath) && 
-            _view.SelectedSourceFileTabIndex >= 0 &&
-            _view.SelectedTargetFileTabIndex >= 0;
+            (_view.SourceFileTabs.Count == 0 || (_view.SourceFileTabs.Count > 0 && _view.SelectedSourceFileTabIndex >= 0)) &&
+            (_view.TargetFileTabs.Count == 0 || (_view.TargetFileTabs.Count > 0 && _view.SelectedTargetFileTabIndex >= 0));
 
         private string GetFilePathFromDialog()
         {

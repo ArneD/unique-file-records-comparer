@@ -60,23 +60,23 @@ namespace UniqueFileRecordsComparer.App.SelectFiles
 
         public IList<string> SourceFileTabs
         {
-            get { return null; }
+            get { return SourceFileTabsDropDown.DataSource as IList<string>; }
             set
             {
                 SourceFileTabsDropDown.DataSource = value;
                 SourceFileTabsDropDown.Enabled = value.Count > 1;
-                SelectedSourceFileTabIndex = 0;
+                SelectedSourceFileTabIndex = value.Count > 0 ? 0 : -1;
             }
         }
 
         public IList<string> TargetFileTabs
         {
-            get { return null; }
+            get { return TargetFileTabsDropDown.DataSource as IList<string>; }
             set
             {
                 TargetFileTabsDropDown.DataSource = value;
                 TargetFileTabsDropDown.Enabled = value.Count > 1;
-                SelectedTargetFileTabIndex = 0;
+                SelectedTargetFileTabIndex = value.Count > 0 ? 0 : -1;
             }
         }
 

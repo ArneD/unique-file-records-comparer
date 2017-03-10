@@ -11,6 +11,8 @@
       <Value>UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj\Properties</Value>
       <Value>SelectColumns\SelectColumnsForm.Designer.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
       <Value>SelectColumns\SelectColumnsForm.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
+      <Value>ComparisonResults\ComparisonResultsForm.Designer.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
+      <Value>ComparisonResults\ComparisonResultsForm.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
     </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>

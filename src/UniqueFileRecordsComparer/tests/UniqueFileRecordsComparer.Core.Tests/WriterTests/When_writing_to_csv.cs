@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using CsvHelper;
 using Moq;
 using Xunit;
-using CsvWriter = UniqueFileRecordsComparer.Core.Writers.CsvWriter;
+using CsvWriter = UniqueFileRecordsComparer.Core.Writers.CsvWriterHelper;
 
 namespace UniqueFileRecordsComparer.Core.Tests.WriterTests
 {

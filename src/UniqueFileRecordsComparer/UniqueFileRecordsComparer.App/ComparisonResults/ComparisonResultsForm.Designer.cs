@@ -1,4 +1,4 @@
-﻿namespace UniqueFileRecordsComparer.App
+﻿namespace UniqueFileRecordsComparer.App.ComparisonResults
 {
     partial class ComparisonResultsForm
     {

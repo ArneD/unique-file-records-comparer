@@ -58,6 +58,8 @@ namespace UniqueFileRecordsComparer.App.Tests.SelectColumns
             var task = _presenter.CompareFiles();
             task.Should().NotBeNull();
 
+            task.Wait();
+
             _rowCollectionComparerMock.Verify(comparer => comparer.GetCollectionComparisonResult(It.IsAny<RowCollection>(), It.IsAny<RowCollection>()));
         }
     }
