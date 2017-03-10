@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 using UniqueFileRecordsComparer.App.ComparisonResults;
-using UniqueFileRecordsComparer.App.Messages;
+using UniqueFileRecordsComparer.App.MessageHandlers;
 using UniqueFileRecordsComparer.Core.Writers;
 
 namespace UniqueFileRecordsComparer.App.SelectColumns

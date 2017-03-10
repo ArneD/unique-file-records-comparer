@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace UniqueFileRecordsComparer.App.Messages
+namespace UniqueFileRecordsComparer.App.MessageHandlers
 {
     public interface ISaveFileMessageHandler
     {

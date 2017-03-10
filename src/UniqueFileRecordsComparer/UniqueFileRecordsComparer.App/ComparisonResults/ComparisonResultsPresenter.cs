@@ -4,7 +4,7 @@ using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Windows.Forms;
-using UniqueFileRecordsComparer.App.Messages;
+using UniqueFileRecordsComparer.App.MessageHandlers;
 using UniqueFileRecordsComparer.Core;
 using UniqueFileRecordsComparer.Core.Writers;
 

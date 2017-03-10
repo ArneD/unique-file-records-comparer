@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using UniqueFileRecordsComparer.App.Messages;
+using UniqueFileRecordsComparer.App.MessageHandlers;
 using UniqueFileRecordsComparer.App.SelectFiles;
 using UniqueFileRecordsComparer.Core.Readers;
 

@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
-using UniqueFileRecordsComparer.App.Messages;
+using System.Windows.Forms;
+using UniqueFileRecordsComparer.App.MessageHandlers;
 using UniqueFileRecordsComparer.Core.Readers;
 
 namespace UniqueFileRecordsComparer.App.SelectFiles
@@ -43,12 +44,17 @@ namespace UniqueFileRecordsComparer.App.SelectFiles
 
         private string GetFilePathFromDialog()
         {
-            return _openFileMessageHandler.Handle(new OpenFileMessage
+            using (var openFileDialog = new OpenFileDialog
+                {
+                    CheckFileExists = true,
+                    Title = "Choose file",
+                    Filter = @"Data file |*.csv;*.xlsx"
+                })
             {
-                CheckFileExists = true,
-                Title = "Choose file",
-                Filter = @"Data file |*.csv;*.xlsx"
-            });
+                var result = _openFileMessageHandler.Handle(openFileDialog);
+
+                return result == DialogResult.OK ? openFileDialog.FileName : string.Empty;
+            }
         }
 
         private IDictionary<int, string> GetTabs(string path)

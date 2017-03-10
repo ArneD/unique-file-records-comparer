@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
 using Moq;
-using UniqueFileRecordsComparer.App.Messages;
+using UniqueFileRecordsComparer.App.MessageHandlers;
 using UniqueFileRecordsComparer.App.SelectFiles;
 using UniqueFileRecordsComparer.Core.Readers;
 using Xunit;
