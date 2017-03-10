@@ -32,7 +32,7 @@ namespace UniqueFileRecordsComparer.App.ComparisonResults
             set
             {
                 _deletedRows = value;
-                Presenter.FillGrid(_deletedRows, NewRowsGrid);
+                Presenter.FillGrid(_deletedRows, DeletedRowsGrid);
                 TotalDeletedRowsLabel.Text = $@"Total: {_deletedRows.Count}";
             }
         }
@@ -46,7 +46,7 @@ namespace UniqueFileRecordsComparer.App.ComparisonResults
 
         private void ExportDeletedRowsButton_Click(object sender, System.EventArgs e)
         {
-            Presenter.WriteRows(_newRows.ToList());
+            Presenter.WriteRows(_deletedRows.ToList());
         }
 
         private void ComparisonResultsForm_FormClosing(object sender, FormClosingEventArgs e)
