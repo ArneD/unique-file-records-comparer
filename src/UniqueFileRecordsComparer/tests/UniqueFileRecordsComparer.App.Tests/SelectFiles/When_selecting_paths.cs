@@ -31,7 +31,7 @@ namespace UniqueFileRecordsComparer.App.Tests.SelectFiles
                     x.FileName = _expectedFilePath;
                 })
                 .Returns(DialogResult.OK);
-                
+
 
             var fileReaderMock = new Mock<IFileReader>();
             fileReaderMock.Setup(reader => reader.GetTabNamesByIndex())
@@ -40,7 +40,10 @@ namespace UniqueFileRecordsComparer.App.Tests.SelectFiles
             var fileReaderFactoryMock = new Mock<IFileReaderFactory>();
             fileReaderFactoryMock.Setup(factory => factory.CreateFromFileName(It.IsAny<FileInfoBase>())).Returns(fileReaderMock.Object);
 
-            _presenter = new SelectFilesPresenter(_viewMock.Object, openFileMessageMock.Object, fileReaderFactoryMock.Object);
+            _presenter = new SelectFilesPresenter(openFileMessageMock.Object, fileReaderFactoryMock.Object)
+            {
+                View = _viewMock.Object
+            };
         }
 
         [Fact]

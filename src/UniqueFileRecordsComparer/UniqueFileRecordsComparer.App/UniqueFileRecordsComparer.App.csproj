@@ -73,6 +73,10 @@
     </Compile>
     <Compile Include="ComparisonResults\ComparisonResultsPresenter.cs" />
     <Compile Include="ComparisonResults\IComparisonResultsView.cs" />
+    <Compile Include="DryIoc\AsyncExecutionFlowScopeContext.cs" />
+    <Compile Include="DryIoc\Container.cs" />
+    <Compile Include="DryIoc\FastExpressionCompiler.cs" />
+    <Compile Include="DryIoc\ImTools.cs" />
     <Compile Include="MessageHandlers\OpenFileMessageHandler.cs" />
     <Compile Include="MessageHandlers\SaveFileMessage.cs" />
     <Compile Include="SelectColumns\ISelectColumnsView.cs" />

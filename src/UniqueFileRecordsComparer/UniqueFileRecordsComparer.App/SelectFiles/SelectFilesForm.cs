@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using DryIoc;
 using UniqueFileRecordsComparer.App.SelectColumns;
 using UniqueFileRecordsComparer.Core;
 using UniqueFileRecordsComparer.Core.Readers;
@@ -9,8 +10,13 @@ namespace UniqueFileRecordsComparer.App.SelectFiles
 {
     public partial class SelectFilesForm : Form, ISelectFilesView
     {
-        public SelectFilesForm()
+        private readonly IContainer _container;
+
+        public SelectFilesForm(SelectFilesPresenter presenter, IContainer container)
         {
+            _container = container;
+            Presenter = presenter;
+            presenter.View = this;
             InitializeComponent();
         }
 
@@ -22,15 +28,13 @@ namespace UniqueFileRecordsComparer.App.SelectFiles
         private void ChooseTargetFileButton_Click(object sender, EventArgs e)
         {
             Presenter.SelectTargetPath();
-
         }
 
         private void NextButton_Click(object sender, EventArgs e)
         {
             if (Presenter.IsViewValid)
             {
-                var selectColumnsForm = new SelectColumnsForm();
-                var presenter = new SelectColumnsPresenter(selectColumnsForm, new FileReaderFactory(), new RowCollectionComparer());
+                var presenter = _container.Resolve<SelectColumnsPresenter>();
                 presenter.Load(new ComparerArguments
                 {
                     SourceFilePath = SourceFilePath,

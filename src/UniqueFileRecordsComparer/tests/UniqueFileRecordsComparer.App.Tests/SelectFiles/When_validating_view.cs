@@ -11,8 +11,6 @@ namespace UniqueFileRecordsComparer.App.Tests.SelectFiles
     public class When_validating_view
     {
         private readonly Mock<ISelectFilesView> _validView = new Mock<ISelectFilesView>();
-        
-
         private readonly SelectFilesPresenter _presenter;
 
         public When_validating_view()
@@ -20,11 +18,14 @@ namespace UniqueFileRecordsComparer.App.Tests.SelectFiles
             _validView.SetupGet(x => x.SourceFilePath).Returns("Test");
             _validView.SetupGet(x => x.TargetFilePath).Returns("Test");
             _validView.SetupGet(x => x.SelectedSourceFileTabIndex).Returns(1);
-            _validView.SetupGet(x => x.SourceFileTabs).Returns(new List<string> {"A"});
+            _validView.SetupGet(x => x.SourceFileTabs).Returns(new List<string> { "A" });
             _validView.SetupGet(x => x.SelectedTargetFileTabIndex).Returns(0);
             _validView.SetupGet(x => x.TargetFileTabs).Returns(new List<string> { "A" });
 
-            _presenter = new SelectFilesPresenter(_validView.Object, Mock.Of<IOpenFileMessageHandler>(), Mock.Of<IFileReaderFactory>());
+            _presenter = new SelectFilesPresenter(Mock.Of<IOpenFileMessageHandler>(), Mock.Of<IFileReaderFactory>())
+            {
+                View = _validView.Object
+            };
         }
 
         [Fact]

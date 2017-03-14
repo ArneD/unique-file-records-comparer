@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using DryIoc;
 using UniqueFileRecordsComparer.App.ComparisonResults;
 using UniqueFileRecordsComparer.App.MessageHandlers;
 using UniqueFileRecordsComparer.Core.Writers;
@@ -9,8 +10,11 @@ namespace UniqueFileRecordsComparer.App.SelectColumns
 {
     public partial class SelectColumnsForm : Form, ISelectColumnsView
     {
-        public SelectColumnsForm()
+        private readonly IContainer _container;
+
+        public SelectColumnsForm(IContainer container)
         {
+            _container = container;
             InitializeComponent();
         }
 
@@ -19,8 +23,7 @@ namespace UniqueFileRecordsComparer.App.SelectColumns
             if (Presenter.IsViewValid)
             {
                 var comparisonResult = await Presenter.CompareFiles();
-                var resultForm = new ComparisonResultsForm();
-                var presenter = new ComparisonResultsPresenter(resultForm, new SaveFileMessageHandler(), new CsvWriterFactory());
+                var presenter = _container.Resolve<ComparisonResultsPresenter>();
                 presenter.Load(comparisonResult);
                 Hide();
             }

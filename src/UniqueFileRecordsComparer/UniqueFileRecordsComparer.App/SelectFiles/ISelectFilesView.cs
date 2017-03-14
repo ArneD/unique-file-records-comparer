@@ -14,5 +14,7 @@ namespace UniqueFileRecordsComparer.App.SelectFiles
         int SelectedTargetFileTabIndex { get; set; }
 
         SelectFilesPresenter Presenter { set; }
+
+        void Show();
     }
 }
