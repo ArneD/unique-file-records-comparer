@@ -15,6 +15,7 @@
       <Value>ComparisonResults\ComparisonResultsForm.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
       <Value>UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj\MessageHandlers</Value>
       <Value>Program.cs:UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj</Value>
+      <Value>UniqueFileRecordsComparer.App\UniqueFileRecordsComparer.App.csproj\DryIoc</Value>
     </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>
